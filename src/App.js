@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Welcome from "./components/Welcome.js";
+import Homepage from "./components/Homepage.js";
 
 export default class App extends Component {
   render() {
@@ -8,6 +9,7 @@ export default class App extends Component {
       <div className="App">
         <header className="App-header">
           <Welcome />
+          <Homepage />
         </header>
       </div>
     );

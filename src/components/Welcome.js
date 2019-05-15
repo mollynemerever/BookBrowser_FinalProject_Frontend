@@ -10,9 +10,39 @@ export default class Welcome extends Component {
     userObj.email = profile.getEmail();
     userObj.image = profile.getImageUrl();
     userObj.join_year = new Date().getFullYear();
-    userObj.industry = undefined;
+    userObj.industry = "";
     userObj.token = response.Zi.id_token;
-    console.log(userObj);
+    this.googleAPI(userObj);
+  };
+
+  googleAPI = userObj => {
+    let url = `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${
+      userObj.token
+    }`;
+    fetch(url)
+      .then(resp => resp.json())
+      .then(data => {
+        if (data.email_verified) {
+          this.checkExistingUser(userObj);
+        } else {
+          alert("error"); //need to revise this
+        }
+      });
+  };
+
+  checkExistingUser = userObj => {
+    let url = "http://localhost:3001/users";
+    let config = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userObj)
+    };
+
+    fetch(url, config)
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+      });
   };
 
   render() {
