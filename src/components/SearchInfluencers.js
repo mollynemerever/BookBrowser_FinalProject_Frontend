@@ -1,8 +1,13 @@
 import React, { Component } from "react";
-import { GoogleLogout } from "react-google-login";
+import NavBar from "./navigationbar/NavBar.js";
 
 export default class SearchInfluencers extends Component {
   render() {
-    return <div> Search Influencers Page </div>;
+    return (
+      <div>
+        <NavBar />
+        Search Influencers Page{" "}
+      </div>
+    );
   }
 }

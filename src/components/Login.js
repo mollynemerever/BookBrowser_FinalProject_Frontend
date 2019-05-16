@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 
-export default class Welcome extends Component {
+export default class Login extends Component {
   responseGoogle = response => {
     let profile = response.getBasicProfile();
     let userObj = {};
@@ -41,11 +42,14 @@ export default class Welcome extends Component {
     fetch(url, config)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data);
+        this.props.handleLogin(data);
       });
   };
 
   render() {
+    if (this.props.isAuthenticated === true) {
+      return <Redirect to="/homepage" />;
+    }
     return (
       <div>
         <GoogleLogin
