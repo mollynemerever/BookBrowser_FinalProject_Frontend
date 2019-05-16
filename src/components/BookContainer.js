@@ -3,7 +3,6 @@ import Book from "./Book.js";
 
 export default class BookContainer extends Component {
   render() {
-    debugger;
     return (
       <div>
         books will be mapped here

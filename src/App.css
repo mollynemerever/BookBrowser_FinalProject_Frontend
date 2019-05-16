@@ -35,3 +35,10 @@
 main {
   margin-top: 75px;
 }
+
+.book-box {
+  margin-top: 50px;
+  border: 0.75px solid black;
+  border-radius: 15px;
+  text-align: center;
+}
