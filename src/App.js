@@ -32,15 +32,12 @@ export default class App extends Component {
           component={() => (
             <Login
               handleLogin={this.handleLogin}
-              isAuthenticated={this.state.isAuthenticated}
+              handleLogout={this.handleLogout}
+              state={this.state}
             />
           )}
         />
-        <Route
-          exact
-          path="/homepage"
-          component={() => <Homepage handleLogout={this.handleLogout} />}
-        />
+        <Route exact path="/homepage" component={Homepage} />
         <Route exact path="/editaccount" component={EditAccount} />
         <Route exact path="/searchinfluencers" component={SearchInfluencers} />
         <Route exact path="/searchbooks" component={SearchBooks} />

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
+import Homepage from "./Homepage.js";
+import NavBar from "./navigationbar/NavBar.js";
 
 export default class Login extends Component {
   responseGoogle = response => {
@@ -47,19 +49,12 @@ export default class Login extends Component {
   };
 
   render() {
-    if (this.props.isAuthenticated === true) {
-      return <Redirect to="/homepage" />;
-    }
     return (
-      <div>
-        <GoogleLogin
-          clientId="672466450813-o7e2908klddv6vd6osf4442j4v2haefl.apps.googleusercontent.com"
-          buttonText="Login with Google"
-          onSuccess={this.responseGoogle}
-          onFailure={this.responseGoogle}
-          cookiePolicy={"single_host_origin"}
-        />
-      </div>
+      <NavBar
+        state={this.props.state}
+        responseGoogle={this.responseGoogle}
+        handleLogout={this.props.handleLogout}
+      />
     );
   }
 }
