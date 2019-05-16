@@ -37,12 +37,39 @@ export default class App extends Component {
             />
           )}
         />
-        <Route exact path="/homepage" component={Homepage} />
+        <Route
+          exact
+          path="/homepage"
+          component={() => (
+            <Homepage state={this.state} handleLogout={this.handleLogout} />
+          )}
+        />
         <Route exact path="/editaccount" component={EditAccount} />
-        <Route exact path="/searchinfluencers" component={SearchInfluencers} />
-        <Route exact path="/searchbooks" component={SearchBooks} />
+        <Route
+          exact
+          path="/searchinfluencers"
+          component={() => (
+            <SearchInfluencers
+              state={this.state}
+              handleLogout={this.handleLogout}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/searchbooks"
+          component={() => (
+            <SearchBooks state={this.state} handleLogout={this.handleLogout} />
+          )}
+        />
         <Route exact path="/profile" component={Profile} />
-        <Route exact path="/mybooklist" component={MyBookList} />
+        <Route
+          exact
+          path="/mybooklist"
+          component={() => (
+            <MyBookList state={this.state} handleLogout={this.handleLogout} />
+          )}
+        />
       </Router>
     );
   }

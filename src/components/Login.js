@@ -49,12 +49,19 @@ export default class Login extends Component {
   };
 
   render() {
+    if (this.props.state.isAuthenticated === true) {
+      return <Redirect to="/homepage" />;
+    }
+
     return (
-      <NavBar
-        state={this.props.state}
-        responseGoogle={this.responseGoogle}
-        handleLogout={this.props.handleLogout}
-      />
+      <div>
+        <NavBar
+          state={this.props.state}
+          responseGoogle={this.responseGoogle}
+          handleLogout={this.props.handleLogout}
+        />
+        LANDING PAGE
+      </div>
     );
   }
 }
