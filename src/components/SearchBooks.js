@@ -19,6 +19,7 @@ export default class SearchBooks extends Component {
       .then(resp => resp.json())
       .then(data => {
         console.log(data);
+      
         this.setState({ searchResults: data.items, searchTerm: "" });
       });
   };
