@@ -7,10 +7,12 @@ export default class SearchBooks extends Component {
   state = { searchTerm: "", searchResults: "" };
 
   handleChange = event => {
+    //handle user input for searchTerm
     this.setState({ searchTerm: event.target.value });
   };
 
   searchGoogle = e => {
+    //pull from google api
     e.preventDefault();
     let url = `https://www.googleapis.com/books/v1/volumes?q=${
       this.state.searchTerm
@@ -18,8 +20,6 @@ export default class SearchBooks extends Component {
     fetch(url)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data);
-      
         this.setState({ searchResults: data.items, searchTerm: "" });
       });
   };
@@ -30,7 +30,12 @@ export default class SearchBooks extends Component {
     }
     let books;
     if (this.state.searchResults !== "") {
-      books = <BookContainer results={this.state.searchResults} />;
+      books = (
+        <BookContainer
+          results={this.state.searchResults}
+          state={this.props.state}
+        />
+      );
     } else {
       books = undefined;
     }

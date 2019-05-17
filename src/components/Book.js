@@ -8,7 +8,7 @@ export default class Book extends Component {
     let config = {
       method: "POST",
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -21,26 +21,52 @@ export default class Book extends Component {
     };
 
     fetch(url, config)
-    .then(resp => resp.json())
-    .then(data => {
-      console.log(data);
-    });
+      .then(resp => resp.json())
+      .then(data => {
+        this.newUsersBooksInstance(data);
+      });
+  };
+
+  newUsersBooksInstance = book => {
+    //save to usersbooks table
+    let url = "http://localhost:3001/userbooks";
+    let config = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: this.props.state.currentUser.id,
+        book_id: book.id,
+        read_status: false
+      })
+    };
+    fetch(url, config)
+      .then(resp => resp.json())
+      .then(data => {
+        if (data.id) {
+          let button = document.getElementById("button");
+          button.textContent = "In Your Collection";
+        }
+        console.log(data);
+      });
   };
 
   render() {
     let image;
     let description;
-    
+
     if (this.props.book.volumeInfo.imageLinks !== undefined) {
       image = <img src={this.props.book.volumeInfo.imageLinks.thumbnail} />;
     } else {
-      image = <h3>"image here"</h3>
+      image = <h3>"image here"</h3>;
     }
 
     if (this.props.book.volumeInfo.description !== undefined) {
       description = <p>{this.props.book.volumeInfo.description}</p>;
     } else {
-      description = <h3>"description here" </h3>
+      description = <h3>"description here" </h3>;
     }
     return (
       <div className="book-box">
@@ -48,7 +74,10 @@ export default class Book extends Component {
         {image}
         <h5> {this.props.book.volumeInfo.authors} </h5>
         {description}
-        <button onClick={this.saveBook}> Save Book </button>
+        <button id="button" onClick={this.saveBook}>
+          {" "}
+          Save Book{" "}
+        </button>
       </div>
     );
   }
