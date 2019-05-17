@@ -7,7 +7,7 @@ export default class BookContainer extends Component {
       <div>
         books will be mapped here
         {this.props.results.map((book, index) => {
-          return <Book key={index} book={book} />;
+          return <Book key={index} book={book} state={this.props.state} />;
         })}
       </div>
     );
