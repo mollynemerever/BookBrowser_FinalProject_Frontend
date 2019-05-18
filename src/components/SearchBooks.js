@@ -4,7 +4,7 @@ import BookContainer from "./BookContainer.js";
 import { Redirect } from "react-router-dom";
 
 export default class SearchBooks extends Component {
-  state = { searchTerm: "", searchResults: "" };
+  state = { searchTerm: "", searchResults: "", source: "SearchBooks" };
 
   handleChange = event => {
     //handle user input for searchTerm
@@ -30,12 +30,7 @@ export default class SearchBooks extends Component {
     }
     let books;
     if (this.state.searchResults !== "") {
-      books = (
-        <BookContainer
-          results={this.state.searchResults}
-          state={this.props.state}
-        />
-      );
+      books = <BookContainer state={this.props.state} source={this.state} />;
     } else {
       books = undefined;
     }
