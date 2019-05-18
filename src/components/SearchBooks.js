@@ -4,7 +4,7 @@ import BookContainer from "./BookContainer.js";
 import { Redirect } from "react-router-dom";
 
 export default class SearchBooks extends Component {
-  state = { searchTerm: "", searchResults: "", source: "SearchBooks" };
+  state = { searchTerm: "", bookArray: "", source: "SearchBooks" };
 
   handleChange = event => {
     //handle user input for searchTerm
@@ -20,8 +20,28 @@ export default class SearchBooks extends Component {
     fetch(url)
       .then(resp => resp.json())
       .then(data => {
-        this.setState({ searchResults: data.items, searchTerm: "" });
+        this.setState({ searchTerm: "" });
+        let searchResults = data.items;
+        this.formatBookArray(searchResults);
       });
+  };
+
+  formatBookArray = searchResults => {
+    let array = [];
+    searchResults.forEach(function(object) {
+      let bookObject = {};
+      bookObject.title = object.volumeInfo.title;
+      bookObject.authors = object.volumeInfo.authors;
+      bookObject.description = object.volumeInfo.description;
+      bookObject.googleId = object.id;
+      if (object.volumeInfo.imageLinks !== undefined) {
+        bookObject.image = object.volumeInfo.imageLinks.thumbnail;
+      } else {
+        bookObject.image = null;
+      }
+      array.push(bookObject);
+    });
+    this.setState({ bookArray: array });
   };
 
   render() {
@@ -29,7 +49,7 @@ export default class SearchBooks extends Component {
       return <Redirect to="/" />;
     }
     let books;
-    if (this.state.searchResults !== "") {
+    if (this.state.bookArray !== "") {
       books = <BookContainer state={this.props.state} source={this.state} />;
     } else {
       books = undefined;
