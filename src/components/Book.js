@@ -54,8 +54,28 @@ export default class Book extends Component {
   };
 
   render() {
+    let buttons;
     let image;
     let description;
+
+    if (this.props.book.id) {
+      //comes from db
+      buttons = (
+        <div>
+          <button> Remove From List </button>
+          <button> Read Book </button>
+          <button> Add Comment </button>
+        </div>
+      );
+    } else {
+      //comes from google
+      buttons = (
+        <button id="button" onClick={this.saveBook}>
+          {" "}
+          Save Book{" "}
+        </button>
+      );
+    }
 
     if (this.props.book.image !== undefined) {
       image = <img src={this.props.book.image} />;
@@ -74,10 +94,7 @@ export default class Book extends Component {
         {image}
         <h5> {this.props.book.authors} </h5>
         {description}
-        <button id="button" onClick={this.saveBook}>
-          {" "}
-          Save Book{" "}
-        </button>
+        {buttons}
       </div>
     );
   }
