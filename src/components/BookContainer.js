@@ -17,7 +17,14 @@ export default class BookContainer extends Component {
         books will be mapped here
         {display}
         {this.props.source.bookArray.map((book, index) => {
-          return <Book key={index} book={book} />;
+          return (
+            <Book
+              key={index}
+              book={book}
+              state={this.props.state}
+              getUserBooks={this.props.getUserBooks}
+            />
+          );
         })}
       </div>
     );

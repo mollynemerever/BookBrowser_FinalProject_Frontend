@@ -43,7 +43,13 @@ export default class MyBookList extends Component {
       return <Redirect to="/" />;
     }
     if (this.state.bookArray !== "") {
-      books = <BookContainer state={this.props.state} source={this.state} />;
+      books = (
+        <BookContainer
+          state={this.props.state}
+          source={this.state}
+          getUserBooks={this.getUserBooks}
+        />
+      );
     } else {
       books = <h6> no books in your list! </h6>;
     }
