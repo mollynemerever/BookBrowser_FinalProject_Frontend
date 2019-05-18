@@ -57,22 +57,22 @@ export default class Book extends Component {
     let image;
     let description;
 
-    if (this.props.book.volumeInfo.imageLinks !== undefined) {
-      image = <img src={this.props.book.volumeInfo.imageLinks.thumbnail} />;
+    if (this.props.book.image !== undefined) {
+      image = <img src={this.props.book.image} />;
     } else {
       image = <h3>"image here"</h3>;
     }
 
-    if (this.props.book.volumeInfo.description !== undefined) {
-      description = <p>{this.props.book.volumeInfo.description}</p>;
+    if (this.props.book.description !== undefined) {
+      description = <p>{this.props.book.description}</p>;
     } else {
       description = <h3>"description here" </h3>;
     }
     return (
       <div className="book-box">
-        <h4> {this.props.book.volumeInfo.title} </h4>
+        <h4> {this.props.book.title} </h4>
         {image}
-        <h5> {this.props.book.volumeInfo.authors} </h5>
+        <h5> {this.props.book.authors} </h5>
         {description}
         <button id="button" onClick={this.saveBook}>
           {" "}

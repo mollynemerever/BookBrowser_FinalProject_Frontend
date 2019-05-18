@@ -12,6 +12,7 @@ import MyBookList from "./components/MyBookList.js";
 export default class App extends Component {
   state = {
     currentUser: "",
+    userbooks: "",
     isAuthenticated: false
   };
 
@@ -21,6 +22,10 @@ export default class App extends Component {
 
   handleLogout = () => {
     this.setState({ currentUser: "", isAuthenticated: false });
+  };
+
+  updateUserBooks = userbooks => {
+    this.setState({ userbooks: userbooks });
   };
 
   render() {
@@ -67,7 +72,11 @@ export default class App extends Component {
           exact
           path="/mybooklist"
           component={() => (
-            <MyBookList state={this.state} handleLogout={this.handleLogout} />
+            <MyBookList
+              state={this.state}
+              handleLogout={this.handleLogout}
+              updateUserBooks={this.updateUserBooks}
+            />
           )}
         />
       </Router>
