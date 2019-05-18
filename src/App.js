@@ -12,7 +12,6 @@ import MyBookList from "./components/MyBookList.js";
 export default class App extends Component {
   state = {
     currentUser: "",
-    userbooks: "",
     isAuthenticated: false
   };
 

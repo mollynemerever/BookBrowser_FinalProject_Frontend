@@ -12,11 +12,11 @@ export default class Book extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        title: this.props.book.volumeInfo.title,
-        author: this.props.book.volumeInfo.authors,
-        image: this.props.book.volumeInfo.imageLinks.thumbnail,
-        description: this.props.book.volumeInfo.description,
-        googleId: this.props.book.id
+        title: this.props.book.title,
+        author: this.props.book.authors,
+        image: this.props.book.image,
+        description: this.props.book.description,
+        googleId: this.props.book.googleId
       })
     };
 
@@ -46,11 +46,44 @@ export default class Book extends Component {
       .then(resp => resp.json())
       .then(data => {
         if (data.id) {
-          let button = document.getElementById("button");
+          let button = document.getElementById("saveBook");
           button.textContent = "In Your Collection";
         }
         console.log(data);
       });
+  };
+
+  removeBook = deleteBook => {
+    console.log(deleteBook);
+    let url = `http://localhost:3001/userbooks/${deleteBook.id}`;
+    let config = {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: deleteBook.id,
+        user_id: this.props.state.currentUser.id
+      })
+    };
+    fetch(url, config).then(() => {
+      this.props.getUserBooks();
+    });
+    //     .then(data => {
+    //       console.log(data);
+    //     });
+  };
+
+  getUserBookId = e => {
+    e.preventDefault();
+    let usersbooksArray = this.props.state.currentUser.userbooks;
+    let book = this.props.book.id;
+    let deleteBook;
+    usersbooksArray.forEach(function(userbook) {
+      if (userbook.book_id === book) deleteBook = userbook;
+    });
+    this.removeBook(deleteBook);
   };
 
   render() {
@@ -62,7 +95,7 @@ export default class Book extends Component {
       //comes from db
       buttons = (
         <div>
-          <button> Remove From List </button>
+          <button onClick={this.getUserBookId}> Remove From List </button>
           <button> Read Book </button>
           <button> Add Comment </button>
         </div>
@@ -70,7 +103,7 @@ export default class Book extends Component {
     } else {
       //comes from google
       buttons = (
-        <button id="button" onClick={this.saveBook}>
+        <button id="saveBook" onClick={this.saveBook}>
           {" "}
           Save Book{" "}
         </button>
