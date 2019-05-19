@@ -48,7 +48,11 @@ export default class App extends Component {
             <Homepage state={this.state} handleLogout={this.handleLogout} />
           )}
         />
-        <Route exact path="/editaccount" component={EditAccount} />
+        <Route
+          exact
+          path="/editaccount"
+          component={() => <EditAccount state={this.state} />}
+        />
         <Route
           exact
           path="/searchinfluencers"
@@ -66,7 +70,11 @@ export default class App extends Component {
             <SearchBooks state={this.state} handleLogout={this.handleLogout} />
           )}
         />
-        <Route exact path="/profile" component={Profile} />
+        <Route
+          exact
+          path="/profile"
+          component={() => <Profile state={this.state} />}
+        />
         <Route
           exact
           path="/mybooklist"
