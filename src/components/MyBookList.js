@@ -17,16 +17,31 @@ export default class MyBookList extends Component {
   };
 
   getUserBooks = () => {
-    console.log("inside getuserbooks");
-    let url = `http://localhost:3001/users/${this.props.state.currentUser.id}`;
-
-    fetch(url)
-      .then(resp => resp.json())
-      .then(data => {
-        console.log("user", data[0].userbooks);
-        this.setState({ userbooks: data[0].userbooks });
-        this.getArrayOfUserBooks();
-      });
+    if (window.location.href.includes("profile")) {
+      //comes from booklist
+      let url = `http://localhost:3001/users/${
+        this.props.state.state.currentUser.id
+      }`;
+      fetch(url)
+        .then(resp => resp.json())
+        .then(data => {
+          console.log("user", data[0].userbooks);
+          this.setState({ userbooks: data[0].userbooks });
+          this.getArrayOfUserBooks();
+        });
+    } else {
+      //comes from booklist
+      let url = `http://localhost:3001/users/${
+        this.props.state.currentUser.id
+      }`;
+      fetch(url)
+        .then(resp => resp.json())
+        .then(data => {
+          console.log("user", data[0].userbooks);
+          this.setState({ userbooks: data[0].userbooks });
+          this.getArrayOfUserBooks();
+        });
+    }
   };
 
   getArrayOfUserBooks = () => {

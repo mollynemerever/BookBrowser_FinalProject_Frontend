@@ -91,7 +91,7 @@ export default class Book extends Component {
     let image;
     let description;
 
-    if (this.props.book.id) {
+    if (this.props.book.id && !window.location.href.includes("profile")) {
       //comes from db
       buttons = (
         <div>
@@ -100,6 +100,8 @@ export default class Book extends Component {
           <button> Add Comment </button>
         </div>
       );
+    } else if (window.location.href.includes("profile")) {
+      buttons = <h6> what should go here? </h6>;
     } else {
       //comes from google
       buttons = (
