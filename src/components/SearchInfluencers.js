@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NavBar from "./navigationbar/NavBar.js";
+import PeopleContainer from "./PeopleContainer.js";
 import { Redirect } from "react-router-dom";
 
 export default class SearchInfluencers extends Component {
@@ -16,6 +17,7 @@ export default class SearchInfluencers extends Component {
         />
         <main>
           <p> search influencers </p>
+          <PeopleContainer state={this.props} />
         </main>
       </div>
     );
