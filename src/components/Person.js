@@ -32,7 +32,7 @@ export default class Person extends Component {
       this.props.following.filter(relation => relation.following_id === user)
         .length > 0
     ) {
-      text = "FOLLOWING";
+      text = "UNFOLLOW";
     } else {
       text = "FOLLOW";
     }
