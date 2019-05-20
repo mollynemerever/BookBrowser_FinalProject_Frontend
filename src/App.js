@@ -27,6 +27,11 @@ export default class App extends Component {
     this.setState({ userbooks: userbooks });
   };
 
+  // updateFollowingUsers = followingUsers => {
+  //   console.log("inside updateFollowingUsers");
+  //   this.setState({ following: "testing" });
+  //};
+
   render() {
     return (
       <Router>

@@ -38,6 +38,7 @@ export default class MyBookList extends Component {
         .then(resp => resp.json())
         .then(data => {
           console.log("user", data[0].userbooks);
+          //this.props.updateUserBooks(data);
           this.setState({ userbooks: data[0].userbooks });
           this.getArrayOfUserBooks();
         });

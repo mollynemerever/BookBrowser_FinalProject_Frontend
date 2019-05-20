@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 export default class Person extends Component {
   handleClick = (e, following_id) => {
+    //create new relationship in db
     e.preventDefault();
     let url = "http://localhost:3001/userfollowerrelationships";
     let config = {
@@ -19,10 +20,23 @@ export default class Person extends Component {
       .then(resp => resp.json())
       .then(data => {
         console.log(data);
+        this.props.getFollowing();
       });
   };
 
   render() {
+    let user = this.props.user.id;
+
+    let text;
+    if (
+      this.props.following.filter(relation => relation.following_id === user)
+        .length > 0
+    ) {
+      text = "FOLLOWING";
+    } else {
+      text = "FOLLOW";
+    }
+
     return (
       <div className="person">
         {" "}
@@ -36,7 +50,7 @@ export default class Person extends Component {
           onClick={e => this.handleClick(e, this.props.user.id)}
         >
           {" "}
-          follow/unfollow{" "}
+          {text}{" "}
         </button>
       </div>
     );
