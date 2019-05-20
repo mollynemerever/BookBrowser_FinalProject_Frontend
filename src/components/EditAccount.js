@@ -3,13 +3,37 @@ import { Redirect } from "react-router-dom";
 
 export default class EditAccount extends Component {
   state = {
-    full_name: "",
-    image: "",
-    industry: "-"
+    editedFullName: this.props.state.currentUser.full_name,
+    editedIndustry: this.props.state.currentUser.industry
   };
 
   handleChange = e => {
+    e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    let url = `http://localhost:3001/users/${this.props.state.currentUser.id}`;
+    let config = {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: this.props.state.currentUser.id,
+        full_name: this.state.editedFullName,
+        industry: this.state.editedIndustry
+      })
+    };
+    fetch(url, config).then(resp => {
+      if (resp.statusText !== "Accepted") {
+        alert("Error - Could Not Update User");
+      } else {
+        alert("Account Info Updated!");
+      }
+    });
   };
 
   render() {
@@ -19,20 +43,27 @@ export default class EditAccount extends Component {
     return (
       <div>
         Edit Account
-        <form>
-          <input
-            type="text"
-            name="full_name"
-            value={this.props.state.currentUser.full_name}
-            onChange={this.handleChange}
-          />
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Name:
+            <input
+              type="text"
+              name="editedFullName"
+              value={this.props.state.currentUser.full_name}
+              onChange={this.handleChange}
+            />
+          </label>
           <label>
             Select your Professional Industry:
             <select
-              name="industry"
-              value={this.state.value}
+              name="editedIndustry"
               onChange={this.handleChange}
+              defaultValue={"CURRENT"}
             >
+              <option value="CURRENT" disabled>
+                {this.props.state.currentUser.industry}
+              </option>
+              <option value="Not Specified">Not Specified</option>
               <option value="Consulting">Consulting</option>
               <option value="Financial Services">Financial Services</option>
               <option value="Healthcare">Healthcare</option>
@@ -48,8 +79,7 @@ export default class EditAccount extends Component {
               <option value="Retail">Retail</option>
             </select>
           </label>
-          <input type="text" value={this.props.state.currentUser.full_name} />
-          <input type="text" value={this.props.state.currentUser.full_name} />
+
           <input type="submit" value="Submit" />
         </form>
       </div>
