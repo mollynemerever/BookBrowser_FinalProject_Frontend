@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default class Person extends Component {
+  state = {
+    follow_status: ""
+  };
+
   handleClick = (e, following_id) => {
     //create new relationship in db
     e.preventDefault();
@@ -20,22 +24,26 @@ export default class Person extends Component {
     fetch(url, config)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data);
         this.props.getFollowing();
       });
   };
 
-  handleClick = () => {
-    console.log("inside get profile");
-  };
-
-  render() {
+  componentDidMount = () => {
+    //set follow status
     let user = this.props.user.id;
-    let text;
     if (
       this.props.following.filter(relation => relation.following_id === user)
         .length > 0
     ) {
+      this.setState({ follow_status: true });
+    } else {
+      this.setState({ follow_status: false });
+    }
+  };
+
+  render() {
+    let text;
+    if (this.state.follow_status === true) {
       text = "UNFOLLOW";
     } else {
       text = "FOLLOW";
@@ -48,18 +56,18 @@ export default class Person extends Component {
         <Link
           to={{
             pathname: "/profile",
-            state: { state: 99, foo: 88 }
+            state: {
+              selectedUser: this.props.user,
+              follow_status: this.state.follow_status
+            }
           }}
         >
           {this.props.user.full_name}
         </Link>
-        <img src={this.props.user.image} alt="chris" />
+        <img src={this.props.user.image} alt="user" />
         <h5> industry: {this.props.user.industry} </h5>
         <h6> member since: {this.props.user.join_year} </h6>
-        <button
-          value={this.props.user.id}
-          onClick={e => this.handleClick(e, this.props.user.id)}
-        >
+        <button onClick={e => this.handleClick(e, this.props.user.id)}>
           {" "}
           {text}{" "}
         </button>

@@ -35,7 +35,6 @@ export default class PeopleContainer extends Component {
       relation => relation.user_id === this.props.state.state.currentUser.id
     );
     this.setState({ following: filtered });
-    //debugger;
   };
 
   getAllUsers = () => {
@@ -55,18 +54,6 @@ export default class PeopleContainer extends Component {
   };
 
   render() {
-    // if (this.state.selectedUser !== "") {
-    //   console.log(this.state.selectedUser);
-    //   return (
-    //     <Redirect
-    //       to={{
-    //         pathname: "/profile"
-    //       }}
-    //       state={{ hi: 99 }}
-    //     />
-    //   );
-    // }
-
     console.log("render");
     let people;
     if (this.state.usersExceptCurrent !== "") {
