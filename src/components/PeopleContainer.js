@@ -1,16 +1,24 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import Person from "./Person.js";
+import Profile from "./Profile.js";
 
 export default class PeopleContainer extends Component {
   state = {
     usersExceptCurrent: "",
-    following: ""
+    following: "",
+    selectedUser: ""
   };
 
   handleClick = e => {
     e.preventDefault();
     this.getFollowing();
     this.getAllUsers();
+  };
+
+  updateSelectedUser = selectedUser => {
+    console.log("inside selected user");
+    this.setState({ selectedUser: selectedUser });
   };
 
   getFollowing = () => {
@@ -47,6 +55,19 @@ export default class PeopleContainer extends Component {
   };
 
   render() {
+    // if (this.state.selectedUser !== "") {
+    //   console.log(this.state.selectedUser);
+    //   return (
+    //     <Redirect
+    //       to={{
+    //         pathname: "/profile"
+    //       }}
+    //       state={{ hi: 99 }}
+    //     />
+    //   );
+    // }
+
+    console.log("render");
     let people;
     if (this.state.usersExceptCurrent !== "") {
       people = this.state.usersExceptCurrent.map((user, index) => {
@@ -57,6 +78,7 @@ export default class PeopleContainer extends Component {
             state={this.props.state}
             following={this.state.following}
             getFollowing={this.getFollowing}
+            updateSelectedUser={this.updateSelectedUser}
           />
         );
       });
