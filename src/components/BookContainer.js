@@ -19,14 +19,23 @@ export default class BookContainer extends Component {
       .then(resp => resp.json())
       .then(data => {
         this.updateArrayOfBooks(data[0].userbooks);
+        console.log(data[0]);
       });
   };
 
   updateArrayOfBooks = arrayOfObjects => {
     let array = [];
+
     arrayOfObjects.forEach(function(object) {
-      array.push(object.book);
+      let bookObject = Object.assign(
+        { read_status: object.read_status },
+        { userbookId: object.id },
+        { inCollection: true }, //comes from db
+        object.book
+      );
+      array.push(bookObject);
     });
+
     this.setState({ arrayOfBooks: array });
   };
 
@@ -35,7 +44,14 @@ export default class BookContainer extends Component {
     let books = this.state.arrayOfBooks;
     if (books !== "") {
       return (display = books.map((book, index) => {
-        return <Book key={index} book={book} user={this.props.user} />;
+        return (
+          <Book
+            key={index}
+            book={book}
+            user={this.props.user}
+            getBooks={this.getBooks}
+          />
+        );
       }));
     }
 

@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 
 export default class Book extends Component {
-  state = { inCollection: false };
+  state = {
+    inCollection: this.props.book.inCollection,
+    readStatus: this.props.book.read_status
+  };
 
   saveBook = e => {
     e.preventDefault();
@@ -44,16 +47,20 @@ export default class Book extends Component {
       })
     };
     fetch(url, config);
-    this.updateCollectionState();
+    this.updateCollectionState(true);
   };
 
-  updateCollectionState = () => {
-    this.setState({ inCollection: true });
+  updateCollectionState = status => {
+    this.setState({ inCollection: status });
   };
 
-  removeBook = deleteBook => {
-    console.log(deleteBook);
-    let url = `http://localhost:3001/userbooks/${deleteBook.id}`;
+  updateReadState = readStatus => {
+    this.setState({ readStatus: readStatus });
+  };
+
+  removeBook = (e, userbookId) => {
+    e.preventDefault();
+    let url = `http://localhost:3001/userbooks/${userbookId}`;
     let config = {
       method: "PATCH",
       headers: {
@@ -61,24 +68,33 @@ export default class Book extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        id: deleteBook.id,
-        user_id: this.props.state.currentUser.id
+        id: userbookId
       })
     };
-    fetch(url, config).then(() => {
-      this.props.getUserBooks();
-    });
+    fetch(url, config).then(() => this.props.getBooks());
   };
 
-  getUserBookId = e => {
+  updateReadStatus = (e, userbookId) => {
     e.preventDefault();
-    let usersbooksArray = this.props.state.currentUser.userbooks;
-    let book = this.props.book.id;
-    let deleteBook;
-    usersbooksArray.forEach(function(userbook) {
-      if (userbook.book_id === book) deleteBook = userbook;
-    });
-    this.removeBook(deleteBook);
+    //console.log("userbookId", userbookId);
+    let url = `http://localhost:3001/userbooks/${userbookId}`;
+    let config = {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: userbookId,
+        read_status: !this.state.readStatus
+      })
+    };
+    fetch(url, config)
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+        this.updateReadState(data.read_status);
+      });
   };
 
   render() {
@@ -86,19 +102,39 @@ export default class Book extends Component {
     let image;
     let description;
     let text;
+    let readStatus;
 
-    if (this.state.inCollection === false) {
-      text = "Save Book";
-    } else {
+    if (
+      this.state.inCollection === true &&
+      !window.location.href.includes("searchbooks")
+    ) {
+      text = "Remove From Your Collection";
+    } else if (this.state.inCollection === true) {
       text = "In Your Collection";
+    } else {
+      text = "Save Book";
+    }
+
+    if (this.state.readStatus === true) {
+      readStatus = "Status: Read";
+    } else {
+      readStatus = "Status: Unread";
     }
 
     if (window.location.href.includes("mybooklist")) {
       //comes from db
       buttons = (
         <div>
-          <button onClick={this.getUserBookId}> Remove From List </button>
-          <button> Read Book </button>
+          <button onClick={e => this.removeBook(e, this.props.book.userbookId)}>
+            {" "}
+            {text}{" "}
+          </button>
+          <button
+            onClick={e => this.updateReadStatus(e, this.props.book.userbookId)}
+          >
+            {" "}
+            {readStatus}{" "}
+          </button>
           <button> Add Comment </button>
         </div>
       );
