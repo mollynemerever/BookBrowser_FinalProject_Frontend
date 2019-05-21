@@ -41,7 +41,7 @@ export default class NavBar extends Component {
                   <Link to="/searchbooks">Search Books</Link>
                 </li>
                 <li>
-                  <Link to="/profile">My Profile?</Link>
+                  <Link to="/profile">My Profile</Link>
                 </li>
                 <li>
                   <Link to="/mybooklist">My Book List</Link>

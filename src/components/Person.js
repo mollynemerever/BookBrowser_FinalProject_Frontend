@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default class Person extends Component {
   handleClick = (e, following_id) => {
@@ -24,9 +25,12 @@ export default class Person extends Component {
       });
   };
 
+  handleClick = () => {
+    console.log("inside get profile");
+  };
+
   render() {
     let user = this.props.user.id;
-
     let text;
     if (
       this.props.following.filter(relation => relation.following_id === user)
@@ -41,8 +45,15 @@ export default class Person extends Component {
       <div className="person">
         {" "}
         persons:
-        <h4> {this.props.user.full_name} </h4>
-        <img src={this.props.user.image} />
+        <Link
+          to={{
+            pathname: "/profile",
+            state: { state: 99, foo: 88 }
+          }}
+        >
+          {this.props.user.full_name}
+        </Link>
+        <img src={this.props.user.image} alt="chris" />
         <h5> industry: {this.props.user.industry} </h5>
         <h6> member since: {this.props.user.join_year} </h6>
         <button
