@@ -82,14 +82,16 @@ class Profile extends Component {
           responseGoogle={this.responseGoogle}
           handleLogout={this.props.handleLogout}
         />
-        <img src={this.state.selectedUser.image} alt="user" />
-        <h3> {this.state.selectedUser.full_name}</h3>
-        <h5> member since {this.state.selectedUser.join_year} </h5>
-        {button}
-        <BookContainer
-          selectedUserId={this.state.selectedUser.id}
-          user={this.props.state}
-        />
+        <main>
+          <img src={this.state.selectedUser.image} alt="user" />
+          <h3> {this.state.selectedUser.full_name}</h3>
+          <h5> member since {this.state.selectedUser.join_year} </h5>
+          {button}
+          <BookContainer
+            selectedUserId={this.state.selectedUser.id}
+            user={this.props.state}
+          />
+        </main>
       </div>
     );
   }

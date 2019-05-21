@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import NavBar from "./navigationbar/NavBar.js";
 
 export default class EditAccount extends Component {
   state = {
@@ -42,46 +43,54 @@ export default class EditAccount extends Component {
     }
     return (
       <div>
-        Edit Account
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="editedFullName"
-              value={this.props.state.currentUser.full_name}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            Select your Professional Industry:
-            <select
-              name="editedIndustry"
-              onChange={this.handleChange}
-              defaultValue={"CURRENT"}
-            >
-              <option value="CURRENT" disabled>
-                {this.props.state.currentUser.industry}
-              </option>
-              <option value="Not Specified">Not Specified</option>
-              <option value="Consulting">Consulting</option>
-              <option value="Financial Services">Financial Services</option>
-              <option value="Healthcare">Healthcare</option>
-              <option value="Higher Education">Higher Education</option>
-              <option value="Human Resources">Human Resources</option>
-              <option value="Technology, Software, and Computer Services">
-                Technology, Software, and Computer Services
-              </option>
-              <option value="Marketing and Advertising">
-                Marketing and Advertising
-              </option>
-              <option value="Real Estate">Real Estate</option>
-              <option value="Retail">Retail</option>
-            </select>
-          </label>
+        <NavBar
+          state={this.props.state}
+          responseGoogle={this.responseGoogle}
+          handleLogout={this.props.handleLogout}
+        />
+        <main>
+          Edit Account
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Name:
+              <input
+                type="text"
+                name="editedFullName"
+                defaultValue={this.props.state.currentUser.full_name}
+                // value={this.}
+                onChange={this.handleChange}
+              />
+            </label>
+            <label>
+              Select your Professional Industry:
+              <select
+                name="editedIndustry"
+                onChange={this.handleChange}
+                defaultValue={"CURRENT"}
+              >
+                <option value="CURRENT" disabled>
+                  {this.props.state.currentUser.industry}
+                </option>
+                <option value="Not Specified">Not Specified</option>
+                <option value="Consulting">Consulting</option>
+                <option value="Financial Services">Financial Services</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Higher Education">Higher Education</option>
+                <option value="Human Resources">Human Resources</option>
+                <option value="Technology, Software, and Computer Services">
+                  Technology, Software, and Computer Services
+                </option>
+                <option value="Marketing and Advertising">
+                  Marketing and Advertising
+                </option>
+                <option value="Real Estate">Real Estate</option>
+                <option value="Retail">Retail</option>
+              </select>
+            </label>
 
-          <input type="submit" value="Submit" />
-        </form>
+            <input type="submit" value="Submit" />
+          </form>
+        </main>
       </div>
     );
   }
