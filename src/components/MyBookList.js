@@ -4,7 +4,9 @@ import BookContainer from "./BookContainer.js";
 import { Redirect } from "react-router-dom";
 
 export default class MyBookList extends Component {
-  state = { userbooks: "", source: "MyBookList", bookArray: "" };
+  state = {
+    selectedUserId: this.props.state.currentUser.id
+  };
 
   // componentDidMount() {
   //   this.getUserBooks();
@@ -18,10 +20,8 @@ export default class MyBookList extends Component {
 
   getUserBooks = () => {
     if (window.location.href.includes("profile")) {
-      //comes from booklist
-      let url = `http://localhost:3001/users/${
-        this.props.state.state.currentUser.id
-      }`;
+      //profile view of books
+      let url = `http://localhost:3001/users/${this.state.selectedUserId}`;
       fetch(url)
         .then(resp => resp.json())
         .then(data => {
@@ -30,7 +30,7 @@ export default class MyBookList extends Component {
           this.getArrayOfUserBooks();
         });
     } else {
-      //comes from booklist
+      //comes from google search
       let url = `http://localhost:3001/users/${
         this.props.state.currentUser.id
       }`;
@@ -54,21 +54,10 @@ export default class MyBookList extends Component {
   };
 
   render() {
-    let books;
     if (this.props.state.isAuthenticated === false) {
       return <Redirect to="/" />;
     }
-    if (this.state.bookArray !== "") {
-      books = (
-        <BookContainer
-          state={this.props.state}
-          source={this.state}
-          getUserBooks={this.getUserBooks}
-        />
-      );
-    } else {
-      books = <h6> no books in your list! </h6>;
-    }
+
     return (
       <div>
         <NavBar
@@ -77,9 +66,12 @@ export default class MyBookList extends Component {
           handleLogout={this.props.handleLogout}
         />
         <main>
-          <p> book list detail page </p>
-          <button onClick={this.onClick}> render </button>
-          {books}
+          <p> book container lives below </p>
+          <BookContainer
+            selectedUserId={this.state.selectedUserId}
+            user={this.props.state}
+          />
+          ;
         </main>
       </div>
     );
