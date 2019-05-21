@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { GoogleLogin } from "react-google-login";
 import { GoogleLogout } from "react-google-login";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { withRouter } from "react-router";
 import "./NavBar.css";
 
-export default class NavBar extends Component {
+class NavBar extends Component {
   render() {
     let greeting;
     if (this.props.state.isAuthenticated === false) {
@@ -41,7 +42,17 @@ export default class NavBar extends Component {
                   <Link to="/searchbooks">Search Books</Link>
                 </li>
                 <li>
-                  <Link to="/profile">My Profile</Link>
+                  <Link
+                    to={{
+                      pathname: "/profile",
+                      state: {
+                        selectedUser: this.props.state.currentUser,
+                        follow_status: undefined
+                      }
+                    }}
+                  >
+                    My Profile
+                  </Link>
                 </li>
                 <li>
                   <Link to="/mybooklist">My Book List</Link>
@@ -61,3 +72,5 @@ export default class NavBar extends Component {
     return <div>{greeting}</div>;
   }
 }
+
+export default withRouter(NavBar);

@@ -7,36 +7,79 @@ import { withRouter } from "react-router";
 class Profile extends Component {
   constructor(props) {
     super(props);
-    console.log("location props", props);
     this.state = {
-      userId: "testing",
-      state: props.location && props.location.state
+      selectedUser: props.location.state.selectedUser,
+      follow_status: props.location.state.follow_status
     };
   }
 
-  componentDidMount() {
-    console.log("mounted location state", this.props);
+  handleClick(e, following_id) {
+    //create or delete relationship
+    e.preventDefault();
+    let url = "http://localhost:3001/userfollowerrelationships";
+    let config = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: this.props.state.currentUser.id,
+        following_id: following_id
+      })
+    };
+    fetch(url, config)
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+        this.updateFollowStatus(data);
+      });
   }
 
-  handleClick = e => {
-    e.preventDefault();
-    this.getProfile();
-  };
-
-  getProfile = () => {
-    console.log("inside get profile");
-    console.log(this.props.state.currentUser.first_name);
-    console.log(this.props.location);
-    debugger;
+  updateFollowStatus = relationship => {
+    if (relationship.message) {
+      this.setState({ follow_status: false });
+    } else {
+      this.setState({ follow_status: true });
+    }
   };
 
   render() {
     if (this.props.state.isAuthenticated === false) {
       return <Redirect to="/" />;
     }
+
+    let button;
+    if (this.state.selectedUser.id !== this.props.state.currentUser.id) {
+      if (this.state.follow_status !== true) {
+        button = (
+          <button
+            onClick={e => this.handleClick(e, this.state.selectedUser.id)}
+          >
+            {" "}
+            FOLLOW{" "}
+          </button>
+        );
+      } else {
+        button = (
+          <button
+            onClick={e => this.handleClick(e, this.state.selectedUser.id)}
+          >
+            {" "}
+            UNFOLLOW{" "}
+          </button>
+        );
+      }
+    } else {
+      button = undefined;
+    }
+
     return (
       <div>
-        <button onClick={this.handleClick}> get profile </button>
+        <img src={this.state.selectedUser.image} alt="user" />
+        <h3> {this.state.selectedUser.full_name}</h3>
+        <h5> member since {this.state.selectedUser.join_year} </h5>
+        {button}
       </div>
     );
   }
