@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 
 export default class Book extends Component {
+  state = { inCollection: false };
+
   saveBook = e => {
-    console.log("inside save book");
     e.preventDefault();
     let url = "http://localhost:3001/books";
     let config = {
@@ -37,20 +38,17 @@ export default class Book extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        user_id: this.props.state.currentUser.id,
+        user_id: this.props.user.currentUser.id,
         book_id: book.id,
         read_status: false
       })
     };
-    fetch(url, config)
-      .then(resp => resp.json())
-      .then(data => {
-        if (data.id) {
-          let button = document.getElementById("saveBook");
-          button.textContent = "In Your Collection";
-        }
-        console.log(data);
-      });
+    fetch(url, config);
+    this.updateCollectionState();
+  };
+
+  updateCollectionState = () => {
+    this.setState({ inCollection: true });
   };
 
   removeBook = deleteBook => {
@@ -70,9 +68,6 @@ export default class Book extends Component {
     fetch(url, config).then(() => {
       this.props.getUserBooks();
     });
-    //     .then(data => {
-    //       console.log(data);
-    //     });
   };
 
   getUserBookId = e => {
@@ -90,8 +85,15 @@ export default class Book extends Component {
     let buttons;
     let image;
     let description;
+    let text;
 
-    if (this.props.book.id && !window.location.href.includes("profile")) {
+    if (this.state.inCollection === false) {
+      text = "Save Book";
+    } else {
+      text = "In Your Collection";
+    }
+
+    if (window.location.href.includes("mybooklist")) {
       //comes from db
       buttons = (
         <div>
@@ -107,13 +109,13 @@ export default class Book extends Component {
       buttons = (
         <button id="saveBook" onClick={this.saveBook}>
           {" "}
-          Save Book{" "}
+          {text}{" "}
         </button>
       );
     }
 
     if (this.props.book.image !== undefined) {
-      image = <img src={this.props.book.image} />;
+      image = <img src={this.props.book.image} alt="book" />;
     } else {
       image = <h3>"image here"</h3>;
     }

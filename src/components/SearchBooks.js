@@ -4,7 +4,7 @@ import BookContainer from "./BookContainer.js";
 import { Redirect } from "react-router-dom";
 
 export default class SearchBooks extends Component {
-  state = { searchTerm: "", bookArray: "", source: "SearchBooks" };
+  state = { searchTerm: "", bookArray: "" };
 
   handleChange = event => {
     //handle user input for searchTerm
@@ -21,8 +21,7 @@ export default class SearchBooks extends Component {
       .then(resp => resp.json())
       .then(data => {
         this.setState({ searchTerm: "" });
-        let searchResults = data.items;
-        this.formatBookArray(searchResults);
+        this.formatBookArray(data.items);
       });
   };
 
@@ -50,7 +49,12 @@ export default class SearchBooks extends Component {
     }
     let books;
     if (this.state.bookArray !== "") {
-      books = <BookContainer state={this.props.state} source={this.state} />;
+      books = (
+        <BookContainer
+          bookArray={this.state.bookArray}
+          user={this.props.state}
+        />
+      );
     } else {
       books = undefined;
     }
