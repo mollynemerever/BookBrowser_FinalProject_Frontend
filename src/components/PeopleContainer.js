@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import Person from "./Person.js";
 import Profile from "./Profile.js";
 
@@ -17,7 +16,6 @@ export default class PeopleContainer extends Component {
   };
 
   updateSelectedUser = selectedUser => {
-    console.log("inside selected user");
     this.setState({ selectedUser: selectedUser });
   };
 

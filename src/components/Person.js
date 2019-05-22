@@ -7,7 +7,7 @@ export default class Person extends Component {
   };
 
   handleClick = (e, following_id) => {
-    //create new relationship in db
+    //create new following relationship in db
     e.preventDefault();
     let url = "http://localhost:3001/userfollowerrelationships";
     let config = {
@@ -24,8 +24,16 @@ export default class Person extends Component {
     fetch(url, config)
       .then(resp => resp.json())
       .then(data => {
-        this.props.getFollowing();
+        if (data.id) {
+          this.updateFollowState(true);
+        } else {
+          this.updateFollowState(false);
+        }
       });
+  };
+
+  updateFollowState = status => {
+    this.setState({ follow_status: status });
   };
 
   componentDidMount = () => {
