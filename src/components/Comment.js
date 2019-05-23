@@ -17,7 +17,23 @@ export default class Comment extends Component {
   editComment = e => {
     //post to comments table
     e.preventDefault();
-    console.log("inside edit comment");
+    let url = `http://localhost:3001/comments/${this.state.commentId}`;
+    let config = {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        comment_id: this.state.commentId,
+        text: this.state.text
+      })
+    };
+    fetch(url, config)
+      .then(resp => resp.json())
+      .then(() => {
+        this.props.getBookCommentInstances(); //trigger rerender of page
+      });
   };
 
   deleteComment = e => {
@@ -53,12 +69,10 @@ export default class Comment extends Component {
     fetch(url, config)
       .then(resp => resp.json())
       .then(() => {
-        //console.log(data);
         this.props.getBookCommentInstances(); //trigger rerender of page
       });
   };
   render() {
-    //debugger;
     let existingComment = (
       <div>
         {" "}
