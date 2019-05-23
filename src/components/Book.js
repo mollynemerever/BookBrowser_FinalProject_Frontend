@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import CommentContainer from "./CommentContainer.js";
 
 export default class Book extends Component {
   state = {
@@ -135,7 +136,11 @@ export default class Book extends Component {
             {" "}
             {readStatus}{" "}
           </button>
-          <button> Add Comment </button>
+          <br />
+          <CommentContainer
+            bookId={this.props.book.id}
+            userId={this.props.user.currentUser.id}
+          />
         </div>
       );
     } else if (window.location.href.includes("profile")) {
