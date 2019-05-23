@@ -19,7 +19,6 @@ export default class BookContainer extends Component {
       .then(resp => resp.json())
       .then(data => {
         this.updateArrayOfBooks(data[0].userbooks);
-        console.log(data[0]);
       });
   };
 

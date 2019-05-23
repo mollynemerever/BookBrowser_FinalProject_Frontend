@@ -77,7 +77,6 @@ export default class Book extends Component {
 
   updateReadStatus = (e, userbookId) => {
     e.preventDefault();
-    //console.log("userbookId", userbookId);
     let url = `http://localhost:3001/userbooks/${userbookId}`;
     let config = {
       method: "PATCH",
