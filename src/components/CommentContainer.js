@@ -5,7 +5,9 @@ export default class CommentContainer extends Component {
   state = {
     bookId: this.props.bookId,
     userId: this.props.userId,
-    comments: ""
+    comments: "",
+    newComment: false,
+    newCommentText: ""
   };
 
   componentDidMount = () => {
@@ -13,55 +15,149 @@ export default class CommentContainer extends Component {
   };
 
   getBookCommentInstances = () => {
+    this.setState({ comments: "" }); //clear out after create new comment
     let url = "http://localhost:3001/bookcommentusers";
     fetch(url)
       .then(resp => resp.json())
       .then(data => {
         let commentIds = [];
-        data.forEach(function(object) {
-          commentIds.push(object.comment_id);
+        data.forEach(object => {
+          if (
+            object.book_id === this.state.bookId &&
+            object.user_id === this.state.userId
+          ) {
+            commentIds.push({
+              commentId: object.comment_id,
+              bookCommentId: object.id
+            });
+          }
         });
         this.getExistingComments(commentIds);
       });
   };
 
-  getExistingComments = (commentIds) => {
-    commentIds.forEach(id => {
-      let url = `http://localhost:3001/comments/${id}`;
+  getExistingComments = commentIds => {
+    //debugger;
+    commentIds.forEach(object => {
+      let test = {};
+      let url = `http://localhost:3001/comments/${object.commentId}`;
       fetch(url)
         .then(resp => resp.json())
         .then(data => {
-          console.log(this)
-          console.log(data)
-          this.setState({comments: [...this.state.comments, data]})
+          //console.log(this);
+          test.comment = data;
+          test.id = object.bookCommentId;
+          console.log(test);
+          this.updateCommentState(test);
         });
-    })
-  }
+    });
+  };
 
+  updateCommentState = test => {
+    this.setState({
+      comments: [...this.state.comments, test]
+    });
+    //debugger;
+  };
 
+  displayCommentBox = e => {
+    e.preventDefault();
+    this.setState({ newComment: true });
+  };
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  createComment = e => {
+    e.preventDefault();
+    let url = "http://localhost:3001/comments";
+    let config = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        text: this.state.newCommentText
+      })
+    };
+    fetch(url, config)
+      .then(resp => resp.json())
+      .then(data => {
+        this.createCommentBookInstance(data.id);
+      });
+    this.setState({ newComment: false, newCommentText: "" });
+  };
+
+  createCommentBookInstance = commentId => {
+    let url = "http://localhost:3001/bookcommentusers";
+    let config = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: this.state.userId,
+        book_id: this.state.bookId,
+        comment_id: commentId
+      })
+    };
+    fetch(url, config)
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+        this.getBookCommentInstances();
+      });
+  };
 
   render() {
     let comments;
-
-    if (this.state.comments.length >= 1) {
+    if (this.state.comments.length > 0) {
       comments = this.state.comments.map((comment, index) => {
+        //debugger;
         return (
           <Comment
             key={index}
             bookId={this.state.bookId}
             userId={this.state.userId}
-            comment={comment}
+            commentObject={comment.comment}
+            id={comment.id}
+            getBookCommentInstances={this.getBookCommentInstances}
           />
         );
       });
     } else {
-      comments = "no existing comments";
+      comments = null;
+    }
+
+    let newComment;
+    if (this.state.newComment === true) {
+      newComment = (
+        <div>
+          {" "}
+          <textarea
+            name="newCommentText"
+            defaultValue={this.state.newCommentText}
+            onChange={this.handleChange}
+          />
+          <button onClick={e => this.createComment(e)}> Submit Comment </button>
+        </div>
+      );
+    } else {
+      newComment = (
+        <button onClick={e => this.displayCommentBox(e)}>
+          {" "}
+          Add Comment? From Container{" "}
+        </button>
+      );
     }
 
     return (
       <div>
-
         {comments}
+        {newComment}
       </div>
     );
   }
