@@ -17,11 +17,26 @@ export default class App extends Component {
 
   handleLogin = user => {
     this.setState({ currentUser: user, isAuthenticated: true });
+    window.localStorage.setItem("user", JSON.stringify(user))
   };
 
   handleLogout = () => {
     this.setState({ currentUser: "", isAuthenticated: false });
+    //window.localStorage.setItem("logged_in", "false")
+    window.localStorage.clear()
   };
+
+  componentDidMount = () => {
+    if(window.localStorage.user){
+      console.log('user exists')
+      let user = JSON.parse(window.localStorage.getItem('user'))
+      this.setState({isAuthenticated: true, currentUser: user})
+    }
+    else {
+      console.log('no user')
+      window.localStorage.clear()
+    }
+  }
 
   updateUserBooks = userbooks => {
     this.setState({ userbooks: userbooks });
