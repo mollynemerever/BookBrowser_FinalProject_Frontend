@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CommentContainer from "./CommentContainer.js";
+import BookPic from '../book.png'
 
 export default class Book extends Component {
   state = {
@@ -103,6 +104,7 @@ export default class Book extends Component {
     let description;
     let text;
     let readStatus;
+    let imageLink
 
     if (
       this.state.inCollection === true &&
@@ -119,6 +121,12 @@ export default class Book extends Component {
       readStatus = "Status: Read";
     } else {
       readStatus = "Status: Unread";
+    }
+
+    if(this.props.book.image === null){
+      imageLink = BookPic
+    } else {
+      imageLink = this.props.book.image
     }
 
     if (window.location.href.includes("mybooklist")) {
@@ -154,11 +162,6 @@ export default class Book extends Component {
       );
     }
 
-    if (this.props.book.image !== undefined) {
-      image = <img src={this.props.book.image} alt="book" />;
-    } else {
-      image = <h3>"image here"</h3>;
-    }
 
     if (this.props.book.description !== undefined) {
       description = <p>{this.props.book.description}</p>;
@@ -168,7 +171,7 @@ export default class Book extends Component {
     return (
       <div className="book-box">
         <h4> {this.props.book.title} </h4>
-        {image}
+        <img src={imageLink} alt="book" />;
         <h5> {this.props.book.authors} </h5>
         {description}
         {buttons}
