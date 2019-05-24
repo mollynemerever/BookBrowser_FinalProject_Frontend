@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { GoogleLogin } from "react-google-login";
-import { GoogleLogout } from "react-google-login";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import "./NavBar.css";
@@ -58,10 +57,7 @@ class NavBar extends Component {
                   <Link to="/mybooklist">My Book List</Link>
                 </li>
                 <li>
-                  <GoogleLogout
-                    buttonText="Logout"
-                    onLogoutSuccess={this.props.handleLogout}
-                  />
+                  <button  onClick={this.props.handleLogout}> google logout </button>
                 </li>
               </ul>
             </div>
