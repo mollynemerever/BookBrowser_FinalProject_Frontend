@@ -8,15 +8,15 @@ export default class MyBookList extends Component {
     selectedUserId: this.props.state.currentUser.id
   };
 
-  // componentDidMount() {
-  //   this.getUserBooks();
-  //   console.log("problem");
-  // }
-
-  onClick = e => {
-    e.preventDefault();
+  componentDidMount() {
     this.getUserBooks();
-  };
+    console.log("problem");
+  }
+
+  // onClick = e => {
+  //   e.preventDefault();
+  //   this.getUserBooks();
+  // };
 
   getUserBooks = () => {
     if (window.location.href.includes("profile")) {
@@ -46,6 +46,7 @@ export default class MyBookList extends Component {
   };
 
   getArrayOfUserBooks = () => {
+    console.log('get array')
     let bookObjects = [];
     this.state.userbooks.forEach(function(object) {
       bookObjects.push(object.book);
@@ -66,12 +67,12 @@ export default class MyBookList extends Component {
           handleLogout={this.props.handleLogout}
         />
         <main>
-          <p> book container lives below </p>
+        
           <BookContainer
             selectedUserId={this.state.selectedUserId}
             user={this.props.state}
           />
-          ;
+
         </main>
       </div>
     );

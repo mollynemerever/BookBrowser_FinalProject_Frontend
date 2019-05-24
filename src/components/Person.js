@@ -67,7 +67,7 @@ export default class Person extends Component {
     return (
       <div className="person">
         {" "}
-        persons:
+        
         <Link
           to={{
             pathname: "/profile",
