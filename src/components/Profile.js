@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import NavBar from "./navigationbar/NavBar.js";
 import BookContainer from "./BookContainer.js";
+import ProfilePic from '../profilepic.png'
 import { withRouter } from "react-router";
 
 class Profile extends Component {
@@ -32,7 +33,6 @@ class Profile extends Component {
     fetch(url, config)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data);
         this.updateFollowStatus(data);
       });
   }
@@ -46,6 +46,14 @@ class Profile extends Component {
   };
 
   render() {
+    let imageLink
+
+    if(this.state.selectedUser.image === null){
+      imageLink = ProfilePic
+    } else {
+      imageLink = this.state.selectedUser.image
+    }
+
     if (this.props.state.isAuthenticated === false) {
       return <Redirect to="/" />;
     }
@@ -83,7 +91,7 @@ class Profile extends Component {
           handleLogout={this.props.handleLogout}
         />
         <main>
-          <img src={this.state.selectedUser.image} alt="user" />
+          <img src={imageLink} alt="user" />
           <h3> {this.state.selectedUser.full_name}</h3>
           <h5> member since {this.state.selectedUser.join_year} </h5>
           {button}
