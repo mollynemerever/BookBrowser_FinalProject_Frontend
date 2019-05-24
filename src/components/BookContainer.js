@@ -4,14 +4,19 @@ import Book from "./Book.js";
 export default class BookContainer extends Component {
   state = { arrayOfBooks: "" };
 
-  handleClick = e => {
-    e.preventDefault();
+  componentDidMount= () => {
+    console.log('book container mounted')
     if (window.location.href.includes("searchbooks")) {
       this.setState({ arrayOfBooks: this.props.bookArray });
     } else {
       this.getBooks();
     }
-  };
+  }
+
+  // handleClick = e => {
+  //   e.preventDefault();
+  //
+  // };
 
   getBooks = () => {
     let url = `http://localhost:3001/users/${this.props.selectedUserId}`;
@@ -56,8 +61,8 @@ export default class BookContainer extends Component {
 
     return (
       <div>
-        books will be mapped here
-        <button onClick={e => this.handleClick(e)}> get books </button>
+        // books will be mapped here
+        // <button onClick={e => this.handleClick(e)}> get books </button>
         {display}
       </div>
     );

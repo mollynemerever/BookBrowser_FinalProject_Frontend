@@ -151,7 +151,7 @@ export default class Book extends Component {
         </div>
       );
     } else if (window.location.href.includes("profile")) {
-      buttons = <h6> what should go here? </h6>;
+      buttons = null
     } else {
       //comes from google
       buttons = (

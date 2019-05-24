@@ -9,11 +9,16 @@ export default class PeopleContainer extends Component {
     selectedUser: ""
   };
 
-  handleClick = e => {
-    e.preventDefault();
+  componentDidMount = () => {
     this.getFollowing();
     this.getAllUsers();
-  };
+  }
+
+  // handleClick = e => {
+  //   e.preventDefault();
+  //   this.getFollowing();
+  //   this.getAllUsers();
+  // };
 
   updateSelectedUser = selectedUser => {
     this.setState({ selectedUser: selectedUser });
@@ -52,7 +57,7 @@ export default class PeopleContainer extends Component {
   };
 
   render() {
-    console.log("render");
+    
     let people;
     if (this.state.usersExceptCurrent !== "") {
       people = this.state.usersExceptCurrent.map((user, index) => {
@@ -72,8 +77,6 @@ export default class PeopleContainer extends Component {
     }
     return (
       <div>
-        People Container
-        <button onClick={this.handleClick}> get people </button>
         {people}
       </div>
     );
