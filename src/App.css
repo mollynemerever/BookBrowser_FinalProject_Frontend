@@ -1,49 +1,36 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
 body {
   background: url(background.jpg);
   background-repeat: repeat-y;
   background-size: cover;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 main {
   margin-top: 75px;
 }
 
+.landing-page {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 350px;
+  margin-top: 7%;
+  width: 100%;
+
+  background-color: rgba(255, 255, 255, 0.6);
+  font-size: 45px;
+  font-family: "Maven Pro", sans-serif;
+}
+
+h1,
+h2 {
+  color: #2c3958;
+  margin-bottom: 0px;
+  margin-top: auto;
+}
+
 .book-box {
   margin-top: 50px;
+  background-color: rgba(255, 255, 255, 0.6);
   border: 0.75px solid black;
   border-radius: 15px;
   text-align: center;
