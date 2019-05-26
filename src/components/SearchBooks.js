@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import NavBar from "./navigationbar/NavBar.js";
 import BookContainer from "./BookContainer.js";
 import { Redirect } from "react-router-dom";
+import "semantic-ui-css/semantic.min.css";
+import { Button, Form } from "semantic-ui-react";
 
 export default class SearchBooks extends Component {
   state = { searchTerm: "", bookArray: "" };
@@ -66,16 +68,19 @@ export default class SearchBooks extends Component {
           handleLogout={this.props.handleLogout}
         />
         <main>
-          <p> search books </p>
-          <form>
-            <input
-              type="text"
-              value={this.state.searchTerm}
-              onChange={this.handleChange}
+          <Form className="search-form">
+            <Form.Input
+              label="Search Here:"
               placeholder="author or title"
+              onChange={this.handleChange}
+              value={this.state.searchTerm}
+              width={5}
             />
-            <input type="submit" value="Search" onClick={this.searchGoogle} />
-          </form>
+            <Button type="submit" onClick={this.searchGoogle}>
+              Search
+            </Button>
+          </Form>
+
           {books}
         </main>
       </div>
