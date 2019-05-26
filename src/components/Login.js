@@ -54,13 +54,14 @@ export default class Login extends Component {
     }
 
     return (
-      <div>
+      <div className="landing-page">
+        <h1> BookBrowser </h1>
+        <h2> Curate, Discover, and Share. </h2> <br />
         <NavBar
           state={this.props.state}
           responseGoogle={this.responseGoogle}
           handleLogout={this.props.handleLogout}
         />
-        LANDING PAGE
       </div>
     );
   }
