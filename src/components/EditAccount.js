@@ -38,7 +38,7 @@ export default class EditAccount extends Component {
   };
 
   render() {
-    if (this.props.state.isAuthenticated === false) {
+    if (!window.localStorage.user) {
       return <Redirect to="/" />;
     }
     return (

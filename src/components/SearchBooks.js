@@ -44,7 +44,7 @@ export default class SearchBooks extends Component {
   };
 
   render() {
-    if (this.props.state.isAuthenticated === false) {
+    if (!window.localStorage.user) {
       return <Redirect to="/" />;
     }
     let books;

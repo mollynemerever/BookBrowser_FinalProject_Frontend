@@ -4,14 +4,14 @@ import Book from "./Book.js";
 export default class BookContainer extends Component {
   state = { arrayOfBooks: "" };
 
-  componentDidMount= () => {
-    console.log('book container mounted')
+  componentDidMount = () => {
+    console.log("book container mounted");
     if (window.location.href.includes("searchbooks")) {
       this.setState({ arrayOfBooks: this.props.bookArray });
     } else {
       this.getBooks();
     }
-  }
+  };
 
   // handleClick = e => {
   //   e.preventDefault();
@@ -59,12 +59,6 @@ export default class BookContainer extends Component {
       }));
     }
 
-    return (
-      <div>
-        // books will be mapped here
-        // <button onClick={e => this.handleClick(e)}> get books </button>
-        {display}
-      </div>
-    );
+    return <div>{display}</div>;
   }
 }

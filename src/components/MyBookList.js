@@ -46,7 +46,7 @@ export default class MyBookList extends Component {
   };
 
   getArrayOfUserBooks = () => {
-    console.log('get array')
+    console.log("get array");
     let bookObjects = [];
     this.state.userbooks.forEach(function(object) {
       bookObjects.push(object.book);
@@ -55,7 +55,7 @@ export default class MyBookList extends Component {
   };
 
   render() {
-    if (this.props.state.isAuthenticated === false) {
+    if (!window.localStorage.user) {
       return <Redirect to="/" />;
     }
 
@@ -67,12 +67,10 @@ export default class MyBookList extends Component {
           handleLogout={this.props.handleLogout}
         />
         <main>
-        
           <BookContainer
             selectedUserId={this.state.selectedUserId}
             user={this.props.state}
           />
-
         </main>
       </div>
     );
