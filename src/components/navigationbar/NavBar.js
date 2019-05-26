@@ -3,9 +3,21 @@ import { GoogleLogin } from "react-google-login";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import "./NavBar.css";
+import "semantic-ui-css/semantic.min.css";
+import { Menu } from "semantic-ui-react";
 
 class NavBar extends Component {
+  // state = {
+  //   activeItem: ""
+  // };
+
+  handleItemClick = (e, { name }) => {
+    this.setState({ active: name });
+    window.localStorage.setItem("active", JSON.stringify(name));
+  };
+
   render() {
+    const activeItem = JSON.parse(window.localStorage.getItem("active"));
     let greeting;
     if (this.props.state.isAuthenticated === false) {
       greeting = (
@@ -19,50 +31,83 @@ class NavBar extends Component {
       );
     } else {
       greeting = (
-        <header className="entire_navbar">
-          <nav className="navbar_navtag">
-            <div />
-            <div className="navbar_logo">
-              <Link to="/homepage">LOGO?</Link>
-            </div>{" "}
-            <div className="spacer" />
-            <div className="navbar_items">
-              <ul>
-                <li>
-                  <Link to="/homepage">Homepage</Link>
-                </li>
-                <li>
-                  <Link to="/editaccount">Edit Account</Link>
-                </li>
-                <li>
-                  <Link to="/searchinfluencers">Search Influencers</Link>
-                </li>
-                <li>
-                  <Link to="/searchbooks">Search Books</Link>
-                </li>
-                <li>
-                  <Link
-                    to={{
-                      pathname: "/profile",
-                      state: {
-                        selectedUser: this.props.state.currentUser,
-                        follow_status: undefined
-                      }
-                    }}
-                  >
-                    My Profile
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/mybooklist">My Book List</Link>
-                </li>
-                <li>
-                  <button  onClick={this.props.handleLogout}> google logout </button>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </header>
+        <Menu secondary>
+          <header className="entire_navbar">
+            <nav className="navbar_navtag">
+              <div className="spacer" />
+              <div className="navbar_items">
+                <ul>
+                  <li>
+                    <Menu.Item
+                      active={activeItem === "Homepage"}
+                      onClick={this.handleItemClick}
+                      as={Link}
+                      to="/homepage"
+                      name="Homepage"
+                    />
+                  </li>
+                  <li>
+                    <Menu.Item
+                      active={activeItem === "Edit Account"}
+                      onClick={this.handleItemClick}
+                      as={Link}
+                      to="/editaccount"
+                      name="Edit Account"
+                    />
+                  </li>
+                  <li>
+                    <Menu.Item
+                      active={activeItem === "Search Influencers"}
+                      onClick={this.handleItemClick}
+                      as={Link}
+                      to="/searchinfluencers"
+                      name="Search Influencers"
+                    />
+                  </li>
+                  <li>
+                    <Menu.Item
+                      active={activeItem === "Search Books"}
+                      onClick={this.handleItemClick}
+                      as={Link}
+                      to="/searchbooks"
+                      name="Search Books"
+                    />
+                  </li>
+                  <li>
+                    <Menu.Item
+                      active={activeItem === "My Profile"}
+                      onClick={this.handleItemClick}
+                      as={Link}
+                      to={{
+                        pathname: "/profile",
+                        state: {
+                          selectedUser: this.props.state.currentUser,
+                          follow_status: undefined
+                        }
+                      }}
+                      name="My Profile"
+                    />
+                  </li>
+                  <li>
+                    <Menu.Item
+                      active={activeItem === "My Books"}
+                      onClick={this.handleItemClick}
+                      as={Link}
+                      to="/mybooklist"
+                      name="My Books"
+                    />
+                  </li>
+                  <li>
+                    <Menu.Item
+                      onClick={this.props.handleLogout}
+                      name="Log Out"
+                    />
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </header>
+        </Menu>
       );
     }
     return <div>{greeting}</div>;
