@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 
 export default class SearchInfluencers extends Component {
   render() {
-    if (this.props.state.isAuthenticated === false) {
+    if (!window.localStorage.user) {
       return <Redirect to="/" />;
     }
     return (
