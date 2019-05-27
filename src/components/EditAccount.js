@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import NavBar from "./navigationbar/NavBar.js";
+import "semantic-ui-css/semantic.min.css";
+import { Dropdown, Button, Input } from "semantic-ui-react";
 
 export default class EditAccount extends Component {
   state = {
     editedFullName: this.props.state.currentUser.full_name,
-    editedIndustry: this.props.state.currentUser.industry
+    editedIndustry: this.props.state.currentUser.industry,
+    editedEmail: this.props.state.currentUser.email
   };
 
   handleChange = e => {
@@ -38,6 +41,33 @@ export default class EditAccount extends Component {
   };
 
   render() {
+    const industries = [
+      { key: "Not Specified", text: "Not Specified", value: "Not Specified" },
+      { key: "Consulting", text: "Consulting", value: "Consulting" },
+      {
+        key: "Financial Services",
+        text: "Financial Services",
+        value: "Financial Services"
+      },
+      { key: "Healthcare", text: "Healthcare", value: "Healthcare" },
+      {
+        key: "Higher Education",
+        text: "Higher Education",
+        value: "Higher Education"
+      },
+      {
+        key: "Technology, Software, and Computer Services",
+        text: "Technology, Software, and Computer Services",
+        value: "Technology, Software, and Computer Services"
+      },
+      {
+        key: "Marketing and Advertising",
+        text: "Marketing and Advertising",
+        value: "Marketing and Advertising"
+      },
+      { key: "Real Estate", text: "Real Estate", value: "Real Estate" },
+      { key: "Retail", text: "Retail", value: "Retail" }
+    ];
     if (!window.localStorage.user) {
       return <Redirect to="/" />;
     }
@@ -53,42 +83,36 @@ export default class EditAccount extends Component {
           <form onSubmit={this.handleSubmit}>
             <label>
               Name:
-              <input
-                type="text"
-                name="editedFullName"
+              <Input
                 defaultValue={this.props.state.currentUser.full_name}
-                // value={this.}
+                name="editedFullName"
                 onChange={this.handleChange}
               />
-            </label>
+            </label>{" "}
+            <br />
             <label>
-              Select your Professional Industry:
-              <select
+              Email:
+              <Input
+                defaultValue={this.props.state.currentUser.email}
+                name="editedEmail"
+                onChange={this.handleChange}
+              />
+            </label>{" "}
+            <br />
+            <label>
+              Industry:
+              <Dropdown
                 name="editedIndustry"
                 onChange={this.handleChange}
-                defaultValue={"CURRENT"}
-              >
-                <option value="CURRENT" disabled>
-                  {this.props.state.currentUser.industry}
-                </option>
-                <option value="Not Specified">Not Specified</option>
-                <option value="Consulting">Consulting</option>
-                <option value="Financial Services">Financial Services</option>
-                <option value="Healthcare">Healthcare</option>
-                <option value="Higher Education">Higher Education</option>
-                <option value="Human Resources">Human Resources</option>
-                <option value="Technology, Software, and Computer Services">
-                  Technology, Software, and Computer Services
-                </option>
-                <option value="Marketing and Advertising">
-                  Marketing and Advertising
-                </option>
-                <option value="Real Estate">Real Estate</option>
-                <option value="Retail">Retail</option>
-              </select>
+                selection
+                placeholder={this.props.state.currentUser.industry}
+                options={industries}
+              />{" "}
             </label>
-
-            <input type="submit" value="Submit" />
+            <br />
+            <Button basic color="blue" type="submit" value="Submit">
+              Save Changes
+            </Button>
           </form>
         </main>
       </div>
