@@ -16,7 +16,6 @@ export default class SearchInfluencers extends Component {
           handleLogout={this.props.handleLogout}
         />
         <main>
-          <p> search influencers </p>
           <PeopleContainer state={this.props} />
         </main>
       </div>

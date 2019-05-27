@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import ProfilePic from '../profilepic.png'
+import ProfilePic from "../profilepic.png";
+import "semantic-ui-css/semantic.min.css";
+import { Card, Image, Button } from "semantic-ui-react";
 
 export default class Person extends Component {
   state = {
@@ -52,41 +54,46 @@ export default class Person extends Component {
 
   render() {
     let text;
-    let imageLink
+    let imageLink;
     if (this.state.follow_status === true) {
       text = "UNFOLLOW";
     } else {
       text = "FOLLOW";
     }
-    if(this.props.user.image === null){
-      imageLink = ProfilePic
+    if (this.props.user.image === null) {
+      imageLink = ProfilePic;
     } else {
-      imageLink = this.props.user.image
+      imageLink = this.props.user.image;
     }
 
     return (
-      <div className="person">
-        {" "}
-        
-        <Link
-          to={{
-            pathname: "/profile",
-            state: {
-              selectedUser: this.props.user,
-              follow_status: this.state.follow_status
-            }
-          }}
-        >
-          {this.props.user.full_name}
-        </Link>
-        <img src={imageLink} alt="user" />
-        <h5> industry: {this.props.user.industry} </h5>
-        <h6> member since: {this.props.user.join_year} </h6>
-        <button onClick={e => this.handleClick(e, this.props.user.id)}>
-          {" "}
-          {text}{" "}
-        </button>
-      </div>
+      <Card>
+        <Image src={imageLink} wrapped ui={false} />
+        <Card.Content>
+          <Card.Header
+            as={Link}
+            to={{
+              pathname: "/profile",
+              state: {
+                selectedUser: this.props.user,
+                follow_status: this.state.follow_status
+              }
+            }}
+          >
+            {this.props.user.full_name}
+          </Card.Header>
+          <Card.Meta>
+            <span className="date">Joined in {this.props.user.join_year}</span>
+          </Card.Meta>
+          <Card.Description>
+            {this.props.user.industry} Industry.
+          </Card.Description>
+
+          <Button onClick={e => this.handleClick(e, this.props.user.id)}>
+            {text}
+          </Button>
+        </Card.Content>
+      </Card>
     );
   }
 }
