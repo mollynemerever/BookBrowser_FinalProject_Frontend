@@ -7,22 +7,34 @@ export default class BookContainer extends Component {
   componentDidMount = () => {
     console.log("book container mounted");
     if (window.location.href.includes("searchbooks")) {
+      //bookarray passed from searchbooks component
       this.setState({ arrayOfBooks: this.props.bookArray });
+    } else if (window.location.href.includes("profile")) {
+      //comes profile save selecteduserId to local storage
+      window.localStorage.setItem(
+        "profile",
+        JSON.stringify(this.props.selectedUserId)
+      );
+      let userId = JSON.parse(window.localStorage.getItem("profile"));
+      console.log("userId from local storage", userId);
+      this.getBooks(userId);
     } else {
-      this.getBooks();
+      //mybooklist, use localstorage.user id to fetch
+      let userId = JSON.parse(window.localStorage.getItem("user")).id;
+      this.getBooks(userId);
     }
   };
+  //lose props upon refresh - so must save the selected user id to local storage
 
-  // handleClick = e => {
-  //   e.preventDefault();
-  //
-  // };
-
-  getBooks = () => {
-    let url = `http://localhost:3001/users/${this.props.selectedUserId}`;
+  getBooks = userId => {
+    console.log("inside get books line 22");
+    let url = `http://localhost:3001/users/${userId}`;
+    //debugger;
     fetch(url)
       .then(resp => resp.json())
       .then(data => {
+        //debugger;
+        console.log(data);
         this.updateArrayOfBooks(data[0].userbooks);
       });
   };
