@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import "semantic-ui-css/semantic.min.css";
+import { Button, Input } from "semantic-ui-react";
 
 export default class Comment extends Component {
   state = {
@@ -75,14 +77,20 @@ export default class Comment extends Component {
   render() {
     let existingComment = (
       <div>
-        {" "}
-        <textarea
-          name="text"
+        <Input
           defaultValue={this.state.text}
+          name="newCommentText"
           onChange={this.handleChange}
         />
-        <button onClick={e => this.editComment(e)}> Edit Comment </button>
-        <button onClick={e => this.deleteComment(e)}> Delete Comment </button>
+
+        <Button basic color="blue" onClick={e => this.editComment(e)}>
+          {" "}
+          Edit Comment{" "}
+        </Button>
+        <Button basic color="blue" onClick={e => this.deleteComment(e)}>
+          {" "}
+          Delete Comment{" "}
+        </Button>
       </div>
     );
 

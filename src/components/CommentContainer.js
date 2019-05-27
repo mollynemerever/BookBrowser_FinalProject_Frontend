@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Comment from "./Comment.js";
+import "semantic-ui-css/semantic.min.css";
+import { Button, Input } from "semantic-ui-react";
 
 export default class CommentContainer extends Component {
   state = {
@@ -136,21 +138,24 @@ export default class CommentContainer extends Component {
     if (this.state.newComment === true) {
       newComment = (
         <div>
-          {" "}
-          <textarea
+          <Input
+            placeholder="New Comment"
             name="newCommentText"
-            defaultValue={this.state.newCommentText}
             onChange={this.handleChange}
           />
-          <button onClick={e => this.createComment(e)}> Submit Comment </button>
+
+          <Button basic color="blue" onClick={e => this.createComment(e)}>
+            {" "}
+            Submit Comment{" "}
+          </Button>
         </div>
       );
     } else {
       newComment = (
-        <button onClick={e => this.displayCommentBox(e)}>
+        <Button basic color="blue" onClick={e => this.displayCommentBox(e)}>
           {" "}
           Add Comment? From Container{" "}
-        </button>
+        </Button>
       );
     }
 
