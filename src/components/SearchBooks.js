@@ -76,7 +76,12 @@ export default class SearchBooks extends Component {
               value={this.state.searchTerm}
               width={5}
             />
-            <Button type="submit" onClick={this.searchGoogle}>
+            <Button
+              basic
+              color="blue"
+              type="submit"
+              onClick={this.searchGoogle}
+            >
               Search
             </Button>
           </Form>

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import CommentContainer from "./CommentContainer.js";
-import BookPic from '../book.png'
+import BookPic from "../book.png";
+import "semantic-ui-css/semantic.min.css";
+import { Image, Item, Button } from "semantic-ui-react";
 
 export default class Book extends Component {
   state = {
@@ -100,11 +102,10 @@ export default class Book extends Component {
 
   render() {
     let buttons;
-    let image;
     let description;
     let text;
     let readStatus;
-    let imageLink
+    let imageLink;
 
     if (
       this.state.inCollection === true &&
@@ -123,26 +124,32 @@ export default class Book extends Component {
       readStatus = "Status: Unread";
     }
 
-    if(this.props.book.image === null){
-      imageLink = BookPic
+    if (this.props.book.image === null) {
+      imageLink = BookPic;
     } else {
-      imageLink = this.props.book.image
+      imageLink = this.props.book.image;
     }
 
     if (window.location.href.includes("mybooklist")) {
       //comes from db
       buttons = (
         <div>
-          <button onClick={e => this.removeBook(e, this.props.book.userbookId)}>
+          <Button
+            basic
+            color="blue"
+            onClick={e => this.removeBook(e, this.props.book.userbookId)}
+          >
             {" "}
             {text}{" "}
-          </button>
-          <button
+          </Button>
+          <Button
+            basic
+            color="blue"
             onClick={e => this.updateReadStatus(e, this.props.book.userbookId)}
           >
             {" "}
             {readStatus}{" "}
-          </button>
+          </Button>
           <br />
           <CommentContainer
             bookId={this.props.book.id}
@@ -151,17 +158,16 @@ export default class Book extends Component {
         </div>
       );
     } else if (window.location.href.includes("profile")) {
-      buttons = null
+      buttons = null;
     } else {
       //comes from google
       buttons = (
-        <button id="saveBook" onClick={this.saveBook}>
+        <Button basic color="blue" id="saveBook" onClick={this.saveBook}>
           {" "}
           {text}{" "}
-        </button>
+        </Button>
       );
     }
-
 
     if (this.props.book.description !== undefined) {
       description = <p>{this.props.book.description}</p>;
@@ -170,11 +176,17 @@ export default class Book extends Component {
     }
     return (
       <div className="book-box">
-        <h4> {this.props.book.title} </h4>
-        <img src={imageLink} alt="book" />;
-        <h5> {this.props.book.authors} </h5>
-        {description}
-        {buttons}
+        <Item.Group divided>
+          <Item>
+            <Item.Image size="tiny" src={imageLink} />
+            <Item.Content verticalAlign="middle">
+              <Item.Header>{this.props.book.title}</Item.Header>
+              <Item.Meta>{this.props.book.authors}</Item.Meta>
+              <Item.Description> {description} </Item.Description>
+              <Item.Extra>{buttons} </Item.Extra>
+            </Item.Content>
+          </Item>
+        </Item.Group>
       </div>
     );
   }
