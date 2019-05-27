@@ -12,7 +12,7 @@ export default class PeopleContainer extends Component {
   componentDidMount = () => {
     this.getFollowing();
     this.getAllUsers();
-  }
+  };
 
   // handleClick = e => {
   //   e.preventDefault();
@@ -57,8 +57,8 @@ export default class PeopleContainer extends Component {
   };
 
   render() {
-    
     let people;
+
     if (this.state.usersExceptCurrent !== "") {
       people = this.state.usersExceptCurrent.map((user, index) => {
         return (
@@ -75,10 +75,6 @@ export default class PeopleContainer extends Component {
     } else {
       people = <h5> no users </h5>;
     }
-    return (
-      <div>
-        {people}
-      </div>
-    );
+    return <div>{people}</div>;
   }
 }

@@ -67,7 +67,7 @@ export default class Person extends Component {
     }
 
     return (
-      <Card>
+      <Card centered raised className="person">
         <Image src={imageLink} wrapped ui={false} />
         <Card.Content>
           <Card.Header
@@ -85,11 +85,13 @@ export default class Person extends Component {
           <Card.Meta>
             <span className="date">Joined in {this.props.user.join_year}</span>
           </Card.Meta>
-          <Card.Description>
-            {this.props.user.industry} Industry.
-          </Card.Description>
+          <Card.Description>{this.props.user.industry}</Card.Description>
 
-          <Button onClick={e => this.handleClick(e, this.props.user.id)}>
+          <Button
+            basic
+            color="blue"
+            onClick={e => this.handleClick(e, this.props.user.id)}
+          >
             {text}
           </Button>
         </Card.Content>
