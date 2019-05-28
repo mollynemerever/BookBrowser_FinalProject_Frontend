@@ -184,12 +184,11 @@ export default class Book extends Component {
                 trigger={<Button color="blue">Read More</Button>}
                 centered={false}
               >
-                <Modal.Header>Book Detail</Modal.Header>
+                <Modal.Header>{this.props.book.title}</Modal.Header>
                 <Modal.Content image>
                   <Image wrapped size="medium" src={imageLink} />
                   <Modal.Description>
-                    <Modal.Header>{this.props.book.title}</Modal.Header>
-                    <p>{this.props.book.authors}</p>
+                    <Modal.Header>{this.props.book.authors}</Modal.Header>
                     <p>{description} </p>
                   </Modal.Description>
                 </Modal.Content>

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Button, Input } from "semantic-ui-react";
+import { Button, Input, Comment, Form } from "semantic-ui-react";
 
-export default class Comment extends Component {
+export default class Comments extends Component {
   state = {
     bookId: this.props.bookId,
     userId: this.props.userId,
@@ -74,23 +74,31 @@ export default class Comment extends Component {
         this.props.getBookCommentInstances(); //trigger rerender of page
       });
   };
+
   render() {
+    let date = this.state.date.substring(0, 10);
     let existingComment = (
       <div>
-        <Input
-          defaultValue={this.state.text}
-          name="newCommentText"
-          onChange={this.handleChange}
-        />
-
-        <Button color="blue" onClick={e => this.editComment(e)}>
-          {" "}
-          Edit Comment{" "}
-        </Button>
-        <Button color="blue" onClick={e => this.deleteComment(e)}>
-          {" "}
-          Delete Comment{" "}
-        </Button>
+        <Comment.Group>
+          <Comment>
+            <Comment.Content>
+              <Comment.Metadata>
+                <div>{date}</div>
+              </Comment.Metadata>
+              <Comment.Text name="newCommentText" onChange={this.handleChange}>
+                {this.state.text}
+              </Comment.Text>
+              <Comment.Actions>
+                <Comment.Action onClick={e => this.editComment(e)}>
+                  Edit
+                </Comment.Action>{" "}
+                <Comment.Action onClick={e => this.deleteComment(e)}>
+                  Delete
+                </Comment.Action>
+              </Comment.Actions>
+            </Comment.Content>
+          </Comment>
+        </Comment.Group>
       </div>
     );
 
