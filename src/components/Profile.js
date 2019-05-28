@@ -5,6 +5,8 @@ import NavBar from "./navigationbar/NavBar.js";
 import BookContainer from "./BookContainer.js";
 import ProfilePic from "../profilepic.png";
 import { withRouter } from "react-router";
+import "semantic-ui-css/semantic.min.css";
+import { Card, Image, Button } from "semantic-ui-react";
 
 class Profile extends Component {
   constructor(props) {
@@ -62,25 +64,27 @@ class Profile extends Component {
     if (this.state.selectedUser.id !== this.props.state.currentUser.id) {
       if (this.state.follow_status !== true) {
         button = (
-          <button
+          <Button
+            basic
+            color="blue"
             onClick={e => this.handleClick(e, this.state.selectedUser.id)}
           >
             {" "}
             FOLLOW{" "}
-          </button>
+          </Button>
         );
       } else {
         button = (
-          <button
+          <Button
+            basic
+            color="blue"
             onClick={e => this.handleClick(e, this.state.selectedUser.id)}
           >
             {" "}
             UNFOLLOW{" "}
-          </button>
+          </Button>
         );
       }
-    } else {
-      button = undefined;
     }
 
     return (
@@ -90,16 +94,27 @@ class Profile extends Component {
           responseGoogle={this.responseGoogle}
           handleLogout={this.props.handleLogout}
         />
-        <main>
-          <img src={imageLink} alt="user" />
-          <h3> {this.state.selectedUser.full_name}</h3>
-          <h5> member since {this.state.selectedUser.join_year} </h5>
-          {button}
-          <BookContainer
-            selectedUserId={this.state.selectedUser.id}
-            user={this.props.state}
-          />
-        </main>
+
+        <Card centered raised className="profile-person">
+          <Image src={imageLink} wrapped ui={true} />
+          <Card.Content className="prof-card-content">
+            <Card.Header>{this.state.selectedUser.full_name}</Card.Header>
+            <Card.Meta>
+              <span className="date">
+                Joined in {this.state.selectedUser.join_year}
+              </span>
+            </Card.Meta>
+            <Card.Description>
+              {this.state.selectedUser.industry}
+            </Card.Description>{" "}
+            <br />
+            {button}
+          </Card.Content>
+        </Card>
+        <BookContainer
+          selectedUserId={this.state.selectedUser.id}
+          user={this.props.state}
+        />
       </div>
     );
   }

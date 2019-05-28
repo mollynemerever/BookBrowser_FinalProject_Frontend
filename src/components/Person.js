@@ -54,6 +54,7 @@ export default class Person extends Component {
 
   render() {
     let text;
+
     let imageLink;
     if (this.state.follow_status === true) {
       text = "UNFOLLOW";
@@ -67,7 +68,7 @@ export default class Person extends Component {
     }
 
     return (
-      <Card centered raised className="person">
+      <Card color="blue" centered raised className="person">
         <Image src={imageLink} wrapped ui={false} />
         <Card.Content>
           <Card.Header
