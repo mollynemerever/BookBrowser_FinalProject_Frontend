@@ -2,20 +2,11 @@ import React, { Component } from "react";
 import CommentContainer from "./CommentContainer.js";
 import BookPic from "../book.png";
 import "semantic-ui-css/semantic.min.css";
-import {
-  Image,
-  Item,
-  Button,
-  Divider,
-  Modal,
-  Confirm,
-  Radio
-} from "semantic-ui-react";
+import { Image, Item, Button, Modal, Confirm, Radio } from "semantic-ui-react";
 
 export default class Book extends Component {
   state = {
     inCollection: this.props.book.inCollection,
-    readStatus: this.props.book.read_status,
     confirmDelete: false
   };
 
@@ -67,10 +58,6 @@ export default class Book extends Component {
     this.setState({ inCollection: status });
   };
 
-  updateReadState = readStatus => {
-    this.setState({ readStatus: readStatus });
-  };
-
   openConfirm = () => {
     //opens confirm modal
     this.setState({ confirmDelete: true });
@@ -100,7 +87,7 @@ export default class Book extends Component {
     );
   };
 
-  updateReadStatus = (e, userbookId) => {
+  updateReadStatus = async (e, userbookId) => {
     e.preventDefault();
     let url = `http://localhost:3001/userbooks/${userbookId}`;
     let config = {
@@ -111,15 +98,16 @@ export default class Book extends Component {
       },
       body: JSON.stringify({
         id: userbookId,
-        read_status: !this.state.readStatus
+        read_status: !this.props.book.read_status
       })
     };
-    fetch(url, config)
+    await fetch(url, config)
       .then(resp => resp.json())
       .then(data => {
         console.log(data);
-        this.updateReadState(data.read_status);
       });
+    await this.props.getBooks(this.props.user.currentUser.id);
+    //call get books to rerender entire book list after updating state
   };
 
   render() {
@@ -140,11 +128,11 @@ export default class Book extends Component {
       text = "Save Book";
     }
 
-    if (this.state.readStatus === true) {
+    if (this.props.book.read_status === true) {
+      console.log("hi");
       readStatus = (
         <Radio
           toggle
-          raised
           label="Read"
           defaultChecked
           onChange={e => this.updateReadStatus(e, this.props.book.userbookId)}
@@ -154,7 +142,6 @@ export default class Book extends Component {
       readStatus = (
         <Radio
           toggle
-          raised
           label="Unread"
           onChange={e => this.updateReadStatus(e, this.props.book.userbookId)}
         />
@@ -171,6 +158,10 @@ export default class Book extends Component {
       //comes from db
       buttons = (
         <div>
+          <br />
+          {readStatus}
+          <br />
+          <br />
           <Button color="blue" onClick={this.openConfirm}>
             {" "}
             {text}{" "}
@@ -181,8 +172,6 @@ export default class Book extends Component {
             onConfirm={e => this.removeBook(e, this.props.book.userbookId)}
           />
           <br />
-          <br />
-          {readStatus}
           <br />
           <CommentContainer
             bookId={this.props.book.id}
@@ -211,13 +200,15 @@ export default class Book extends Component {
       <div className="book-box">
         <Item.Group divided>
           <Item>
-            <Item.Image size="tiny" src={imageLink} />
+            <Item.Image size="small" src={imageLink} verticalAlign="middle" />
             <Item.Content verticalAlign="middle">
               <Item.Header>{this.props.book.title}</Item.Header>
-              <Item.Meta>{this.props.book.authors}</Item.Meta>
+              <Item.Meta> {this.props.book.author}</Item.Meta>
+
+              <Item.Extra>{buttons} </Item.Extra>
               <Modal
                 trigger={<Button color="blue">Description</Button>}
-                centered={false}
+                centered={true}
               >
                 <Modal.Header>{this.props.book.title}</Modal.Header>
                 <Modal.Content image>
@@ -227,12 +218,10 @@ export default class Book extends Component {
                     <p>{description} </p>
                   </Modal.Description>
                 </Modal.Content>
-              </Modal>{" "}
-              <Item.Extra>{buttons} </Item.Extra>
+              </Modal>
             </Item.Content>
           </Item>
         </Item.Group>
-        <Divider />
       </div>
     );
   }
