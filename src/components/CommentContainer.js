@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import Comment from "./Comment.js";
+import Comments from "./Comments.js";
 import "semantic-ui-css/semantic.min.css";
-import { Button, Input } from "semantic-ui-react";
+import { Button, Input, Comment, Form } from "semantic-ui-react";
 
 export default class CommentContainer extends Component {
   state = {
     bookId: this.props.bookId,
     userId: this.props.userId,
     comments: "",
-    newComment: false,
     newCommentText: ""
   };
 
@@ -39,7 +38,6 @@ export default class CommentContainer extends Component {
   };
 
   getExistingComments = commentIds => {
-    //debugger;
     commentIds.forEach(object => {
       let test = {};
       let url = `http://localhost:3001/comments/${object.commentId}`;
@@ -62,15 +60,9 @@ export default class CommentContainer extends Component {
     //debugger;
   };
 
-  displayCommentBox = e => {
-    e.preventDefault();
-    this.setState({ newComment: true });
-  };
-
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-
   createComment = e => {
     e.preventDefault();
     let url = "http://localhost:3001/comments";
@@ -89,7 +81,7 @@ export default class CommentContainer extends Component {
       .then(data => {
         this.createCommentBookInstance(data.id);
       });
-    this.setState({ newComment: false, newCommentText: "" });
+    this.setState({ newCommentText: "" });
   };
 
   createCommentBookInstance = commentId => {
@@ -120,7 +112,7 @@ export default class CommentContainer extends Component {
       comments = this.state.comments.map((comment, index) => {
         //debugger;
         return (
-          <Comment
+          <Comments
             key={index}
             bookId={this.state.bookId}
             userId={this.state.userId}
@@ -134,35 +126,22 @@ export default class CommentContainer extends Component {
       comments = null;
     }
 
-    let newComment;
-    if (this.state.newComment === true) {
-      newComment = (
-        <div>
-          <Input
+    return (
+      <div>
+        {comments}
+        <Form>
+          <Form.TextArea
             placeholder="New Comment"
             name="newCommentText"
             onChange={this.handleChange}
           />
-
-          <Button basic color="blue" onClick={e => this.createComment(e)}>
-            {" "}
-            Submit Comment{" "}
-          </Button>
-        </div>
-      );
-    } else {
-      newComment = (
-        <Button color="blue" onClick={e => this.displayCommentBox(e)}>
-          {" "}
-          Add Comment? From Container{" "}
-        </Button>
-      );
-    }
-
-    return (
-      <div>
-        {comments}
-        {newComment}
+          <Button
+            icon="edit"
+            content="Add Comment"
+            color="blue"
+            onClick={e => this.createComment(e)}
+          />
+        </Form>
       </div>
     );
   }
