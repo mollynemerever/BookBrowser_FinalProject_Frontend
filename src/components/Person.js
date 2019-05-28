@@ -69,7 +69,7 @@ export default class Person extends Component {
 
     return (
       <Card color="blue" centered raised className="person">
-        <Image src={imageLink} wrapped ui={false} />
+        <Image src={imageLink} size="mini" wrapped ui={false} />
         <Card.Content>
           <Card.Header
             as={Link}

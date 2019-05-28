@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Person from "./Person.js";
 import Profile from "./Profile.js";
+import "semantic-ui-css/semantic.min.css";
+import { Card, Divider, Grid } from "semantic-ui-react";
 
 export default class PeopleContainer extends Component {
   state = {
@@ -13,12 +15,6 @@ export default class PeopleContainer extends Component {
     this.getFollowing();
     this.getAllUsers();
   };
-
-  // handleClick = e => {
-  //   e.preventDefault();
-  //   this.getFollowing();
-  //   this.getAllUsers();
-  // };
 
   updateSelectedUser = selectedUser => {
     this.setState({ selectedUser: selectedUser });
@@ -75,6 +71,11 @@ export default class PeopleContainer extends Component {
     } else {
       people = <h5> no users </h5>;
     }
-    return <div>{people}</div>;
+    return (
+      <div className="people-grid">
+        <Card.Group itemsPerRow={3}>{people}</Card.Group>
+        <Divider />
+      </div>
+    );
   }
 }
