@@ -29,12 +29,20 @@ export default class SearchBooks extends Component {
 
   formatBookArray = searchResults => {
     let array = [];
-    searchResults.forEach(function(object) {
+    searchResults.forEach(object => {
       let bookObject = {};
       bookObject.title = object.volumeInfo.title;
-      bookObject.authors = object.volumeInfo.authors;
+      //debugger;
+      //bookObject.authors = object.volumeInfo.authors[0];
       bookObject.description = object.volumeInfo.description;
       bookObject.googleId = object.id;
+
+      if (object.volumeInfo.authors !== undefined) {
+        bookObject.authors = object.volumeInfo.authors[0];
+      } else {
+        bookObject.authors = null;
+      }
+
       if (object.volumeInfo.imageLinks !== undefined) {
         bookObject.image = object.volumeInfo.imageLinks.thumbnail;
       } else {
