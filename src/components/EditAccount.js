@@ -2,18 +2,24 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import NavBar from "./navigationbar/NavBar.js";
 import "semantic-ui-css/semantic.min.css";
-import { Dropdown, Button, Input, Form, Header, Icon } from "semantic-ui-react";
+import { Select, Button, Input, Form, Header, Icon } from "semantic-ui-react";
 
 export default class EditAccount extends Component {
   state = {
     editedFullName: this.props.state.currentUser.full_name,
-    editedIndustry: this.props.state.currentUser.industry,
+    value: this.props.state.currentUser.industry,
     editedEmail: this.props.state.currentUser.email
   };
+  //value represents industry. name this way bc semantic ui select tag
 
   handleChange = e => {
     e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleIndustryChange = (e, { value }) => {
+    e.preventDefault();
+    this.setState({ value });
   };
 
   handleSubmit = e => {
@@ -28,16 +34,16 @@ export default class EditAccount extends Component {
       body: JSON.stringify({
         user_id: this.props.state.currentUser.id,
         full_name: this.state.editedFullName,
-        industry: this.state.editedIndustry
+        email: this.state.editedEmail,
+        industry: this.state.value
       })
     };
-    fetch(url, config).then(resp => {
-      if (resp.statusText !== "Accepted") {
-        alert("Error - Could Not Update User");
-      } else {
-        alert("Account Info Updated!");
-      }
-    });
+    fetch(url, config)
+      .then(resp => resp.json())
+      .then(data => {
+        this.props.handleLogin(data);
+        alert("Account Updated");
+      });
   };
 
   render() {
@@ -80,18 +86,13 @@ export default class EditAccount extends Component {
         />
 
         <div className="edit-account">
-          <Form.Group>
+          <Form.Group centered>
             <Header size="large">
               <Icon name="settings" />
               <Header.Content> Edit Account </Header.Content>
             </Header>
             <br />
-            <Form
-              className="edit-form"
-              centered
-              widths="equal"
-              onSubmit={this.handleSubmit}
-            >
+            <Form className="edit-form" centered onSubmit={this.handleSubmit}>
               <Form.Field inline>
                 <label>Name:</label>
                 <Input
@@ -109,13 +110,11 @@ export default class EditAccount extends Component {
                 />
               </Form.Field>
               <Form.Field>
-                <label inline>Industry: </label>
-                <Dropdown
-                  inline={true}
+                <label inline>Industry:</label>
+                <Select
                   name="editedIndustry"
-                  onChange={this.handleChange}
-                  selection
-                  defaultValue={this.props.state.currentUser.industry}
+                  onChange={this.handleIndustryChange}
+                  placeholder={this.props.state.currentUser.industry}
                   options={industries}
                 />
               </Form.Field>

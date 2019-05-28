@@ -16,15 +16,13 @@ export default class App extends Component {
   };
 
   handleLogin = user => {
-    //debugger;
-
     window.localStorage.setItem("user", JSON.stringify(user));
     this.setState({ currentUser: user, isAuthenticated: true });
   };
 
   handleLogout = () => {
+    console.log("inside handleLogout");
     this.setState({ currentUser: "", isAuthenticated: false });
-    //window.localStorage.setItem("logged_in", "false")
     window.localStorage.clear();
   };
 
@@ -67,7 +65,9 @@ export default class App extends Component {
         <Route
           exact
           path="/editaccount"
-          component={() => <EditAccount state={this.state} />}
+          component={() => (
+            <EditAccount state={this.state} handleLogin={this.handleLogin} />
+          )}
         />
         <Route
           exact
