@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import Book from "./Book.js";
+import "semantic-ui-css/semantic.min.css";
+import { Radio, Form } from "semantic-ui-react";
 
 export default class BookContainer extends Component {
-  state = { arrayOfBooks: "" };
+  state = {
+    arrayOfBooks: "",
+    filteredArray: ""
+  };
 
   componentDidMount = () => {
     console.log("book container mounted");
@@ -26,22 +31,24 @@ export default class BookContainer extends Component {
   };
   //lose props upon refresh - so must save the selected user id to local storage
 
+  componentDidUpdate = prevProps => {
+    if (this.props.filter !== prevProps.filter && this.props.filter !== "all") {
+      this.filterBooks();
+    }
+  };
+
   getBooks = userId => {
-    console.log("inside get books line 22");
+    console.log("inside get books");
     let url = `http://localhost:3001/users/${userId}`;
-    //debugger;
     fetch(url)
       .then(resp => resp.json())
       .then(data => {
-        //debugger;
-        console.log(data);
         this.updateArrayOfBooks(data[0].userbooks);
       });
   };
 
   updateArrayOfBooks = arrayOfObjects => {
     let array = [];
-
     arrayOfObjects.forEach(function(object) {
       let bookObject = Object.assign(
         { read_status: object.read_status },
@@ -51,14 +58,28 @@ export default class BookContainer extends Component {
       );
       array.push(bookObject);
     });
-
     this.setState({ arrayOfBooks: array });
+  };
+
+  filterBooks = () => {
+    let filtered;
+    let unfiltered = this.state.arrayOfBooks;
+    if (this.props.filter === "unread") {
+      filtered = unfiltered.filter(book => book.read_status === false);
+      console.log("filtered unread", filtered);
+    } else {
+      filtered = unfiltered.filter(book => book.read_status === true);
+      console.log("filtered read", filtered);
+    }
+    this.setState({ filteredArray: filtered });
   };
 
   render() {
     let display;
-    let books = this.state.arrayOfBooks;
-    if (books !== "") {
+    let books;
+    if (this.props.filter !== "all" && this.state.filteredArray !== "") {
+      books = this.state.filteredArray;
+
       return (display = books.map((book, index) => {
         return (
           <Book
@@ -69,6 +90,20 @@ export default class BookContainer extends Component {
           />
         );
       }));
+    } else if (this.props.filter === "all" && this.state.arrayOfBooks !== "") {
+      books = this.state.arrayOfBooks;
+      return (display = books.map((book, index) => {
+        return (
+          <Book
+            key={index}
+            book={book}
+            user={this.props.user}
+            getBooks={this.getBooks}
+          />
+        );
+      }));
+    } else {
+      display = <h6> no books </h6>;
     }
 
     return <div>{display}</div>;
