@@ -65,10 +65,23 @@ h2 {
   max-width: 50%;
 }
 
-.ui.card {
-  width: 15%;
+.person {
+  text-align: center;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
-.ui.person {
-  text-align: center;
+.ui.three.cards {
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.ui.three.cards > .card {
+  width: calc(33.33333333% - 2em);
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.ui.cards > .card {
+  font-size: 1.5em;
 }
