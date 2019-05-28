@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import CommentContainer from "./CommentContainer.js";
 import BookPic from "../book.png";
 import "semantic-ui-css/semantic.min.css";
-import { Image, Item, Button, Divider } from "semantic-ui-react";
+import { Image, Item, Button, Divider, Modal } from "semantic-ui-react";
 
 export default class Book extends Component {
   state = {
@@ -181,8 +181,25 @@ export default class Book extends Component {
             <Item.Image size="tiny" src={imageLink} />
             <Item.Content verticalAlign="middle">
               <Item.Header>{this.props.book.title}</Item.Header>
-              <Item.Meta>{this.props.book.author}</Item.Meta>
-              <Item.Description> {description} </Item.Description>
+              <Item.Meta>{this.props.book.authors}</Item.Meta>
+              <Modal
+                trigger={
+                  <Button basic color="blue">
+                    Read More
+                  </Button>
+                }
+                centered={false}
+              >
+                <Modal.Header>Book Detail</Modal.Header>
+                <Modal.Content image>
+                  <Image wrapped size="medium" src={imageLink} />
+                  <Modal.Description>
+                    <Modal.Header>{this.props.book.title}</Modal.Header>
+                    <p>{this.props.book.authors}</p>
+                    <p>{description} </p>
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>{" "}
               <Item.Extra>{buttons} </Item.Extra>
             </Item.Content>
           </Item>
