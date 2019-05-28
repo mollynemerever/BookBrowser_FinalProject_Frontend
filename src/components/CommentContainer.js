@@ -63,6 +63,7 @@ export default class CommentContainer extends Component {
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   createComment = e => {
     e.preventDefault();
     let url = "http://localhost:3001/comments";
@@ -134,6 +135,7 @@ export default class CommentContainer extends Component {
             placeholder="New Comment"
             name="newCommentText"
             onChange={this.handleChange}
+            value={this.state.newCommentText}
           />
           <Button
             icon="edit"
