@@ -152,7 +152,7 @@ export default class CommentContainer extends Component {
       );
     } else {
       newComment = (
-        <Button basic color="blue" onClick={e => this.displayCommentBox(e)}>
+        <Button color="blue" onClick={e => this.displayCommentBox(e)}>
           {" "}
           Add Comment? From Container{" "}
         </Button>

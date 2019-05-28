@@ -135,7 +135,6 @@ export default class Book extends Component {
       buttons = (
         <div>
           <Button
-            basic
             color="blue"
             onClick={e => this.removeBook(e, this.props.book.userbookId)}
           >
@@ -143,7 +142,6 @@ export default class Book extends Component {
             {text}{" "}
           </Button>
           <Button
-            basic
             color="blue"
             onClick={e => this.updateReadStatus(e, this.props.book.userbookId)}
           >
@@ -162,7 +160,7 @@ export default class Book extends Component {
     } else {
       //comes from google
       buttons = (
-        <Button basic color="blue" id="saveBook" onClick={this.saveBook}>
+        <Button color="blue" id="saveBook" onClick={this.saveBook}>
           {" "}
           {text}{" "}
         </Button>
@@ -183,11 +181,7 @@ export default class Book extends Component {
               <Item.Header>{this.props.book.title}</Item.Header>
               <Item.Meta>{this.props.book.authors}</Item.Meta>
               <Modal
-                trigger={
-                  <Button basic color="blue">
-                    Read More
-                  </Button>
-                }
+                trigger={<Button color="blue">Read More</Button>}
                 centered={false}
               >
                 <Modal.Header>Book Detail</Modal.Header>

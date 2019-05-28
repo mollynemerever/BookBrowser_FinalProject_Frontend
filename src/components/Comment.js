@@ -83,11 +83,11 @@ export default class Comment extends Component {
           onChange={this.handleChange}
         />
 
-        <Button basic color="blue" onClick={e => this.editComment(e)}>
+        <Button color="blue" onClick={e => this.editComment(e)}>
           {" "}
           Edit Comment{" "}
         </Button>
-        <Button basic color="blue" onClick={e => this.deleteComment(e)}>
+        <Button color="blue" onClick={e => this.deleteComment(e)}>
           {" "}
           Delete Comment{" "}
         </Button>
