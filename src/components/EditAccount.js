@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import NavBar from "./navigationbar/NavBar.js";
 import "semantic-ui-css/semantic.min.css";
-import { Dropdown, Button, Input } from "semantic-ui-react";
+import { Dropdown, Button, Input, Form, Header, Icon } from "semantic-ui-react";
 
 export default class EditAccount extends Component {
   state = {
@@ -78,43 +78,54 @@ export default class EditAccount extends Component {
           responseGoogle={this.responseGoogle}
           handleLogout={this.props.handleLogout}
         />
-        <main>
-          Edit Account
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Name:
-              <Input
-                defaultValue={this.props.state.currentUser.full_name}
-                name="editedFullName"
-                onChange={this.handleChange}
-              />
-            </label>{" "}
+
+        <div className="edit-account">
+          <Form.Group>
+            <Header size="large">
+              <Icon name="settings" />
+              <Header.Content> Edit Account </Header.Content>
+            </Header>
             <br />
-            <label>
-              Email:
-              <Input
-                defaultValue={this.props.state.currentUser.email}
-                name="editedEmail"
-                onChange={this.handleChange}
-              />
-            </label>{" "}
-            <br />
-            <label>
-              Industry:
-              <Dropdown
-                name="editedIndustry"
-                onChange={this.handleChange}
-                selection
-                placeholder={this.props.state.currentUser.industry}
-                options={industries}
-              />{" "}
-            </label>
-            <br />
-            <Button basic color="blue" type="submit" value="Submit">
-              Save Changes
-            </Button>
-          </form>
-        </main>
+            <Form
+              className="edit-form"
+              centered
+              widths="equal"
+              onSubmit={this.handleSubmit}
+            >
+              <Form.Field inline>
+                <label>Name:</label>
+                <Input
+                  placeholder={this.props.state.currentUser.full_name}
+                  name="editedFullName"
+                  onChange={this.handleChange}
+                />
+              </Form.Field>
+              <Form.Field inline>
+                <label>Email:</label>
+                <Input
+                  placeholder={this.props.state.currentUser.email}
+                  name="editedEmail"
+                  onChange={this.handleChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label inline>Industry: </label>
+                <Dropdown
+                  inline={true}
+                  name="editedIndustry"
+                  onChange={this.handleChange}
+                  selection
+                  defaultValue={this.props.state.currentUser.industry}
+                  options={industries}
+                />
+              </Form.Field>
+
+              <Button color="blue" type="submit" value="Submit">
+                Save Changes
+              </Button>
+            </Form>
+          </Form.Group>
+        </div>
       </div>
     );
   }

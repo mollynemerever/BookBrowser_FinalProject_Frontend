@@ -8,6 +8,26 @@ main {
   margin-top: 75px;
 }
 
+.edit-account {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  margin-left: 25%;
+  margin-right: 25%;
+  height: 350px;
+}
+
+.edit-form {
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  justify-content: center;
+}
+
 .landing-page {
   text-align: center;
   justify-content: center;
@@ -29,8 +49,11 @@ h2 {
 }
 
 .book-box {
-  margin-left: 15%;
-  margin-right: 15%;
+  display: flex;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 25px;
 }
 
 .search-form {
