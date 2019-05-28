@@ -2,12 +2,21 @@ import React, { Component } from "react";
 import CommentContainer from "./CommentContainer.js";
 import BookPic from "../book.png";
 import "semantic-ui-css/semantic.min.css";
-import { Image, Item, Button, Divider, Modal } from "semantic-ui-react";
+import {
+  Image,
+  Item,
+  Button,
+  Divider,
+  Modal,
+  Confirm,
+  Radio
+} from "semantic-ui-react";
 
 export default class Book extends Component {
   state = {
     inCollection: this.props.book.inCollection,
-    readStatus: this.props.book.read_status
+    readStatus: this.props.book.read_status,
+    confirmDelete: false
   };
 
   saveBook = e => {
@@ -62,8 +71,19 @@ export default class Book extends Component {
     this.setState({ readStatus: readStatus });
   };
 
+  openConfirm = () => {
+    //opens confirm modal
+    this.setState({ confirmDelete: true });
+  };
+
+  closeConfirm = () => {
+    //closes confirm modal
+    this.setState({ confirmDelete: false });
+  };
+
   removeBook = (e, userbookId) => {
     e.preventDefault();
+    this.closeConfirm();
     let url = `http://localhost:3001/userbooks/${userbookId}`;
     let config = {
       method: "PATCH",
@@ -75,7 +95,9 @@ export default class Book extends Component {
         id: userbookId
       })
     };
-    fetch(url, config).then(() => this.props.getBooks());
+    fetch(url, config).then(() =>
+      this.props.getBooks(this.props.user.currentUser.id)
+    );
   };
 
   updateReadStatus = (e, userbookId) => {
@@ -119,9 +141,24 @@ export default class Book extends Component {
     }
 
     if (this.state.readStatus === true) {
-      readStatus = "Status: Read";
+      readStatus = (
+        <Radio
+          toggle
+          raised
+          label="Read"
+          defaultChecked
+          onChange={e => this.updateReadStatus(e, this.props.book.userbookId)}
+        />
+      );
     } else {
-      readStatus = "Status: Unread";
+      readStatus = (
+        <Radio
+          toggle
+          raised
+          label="Unread"
+          onChange={e => this.updateReadStatus(e, this.props.book.userbookId)}
+        />
+      );
     }
 
     if (this.props.book.image === null) {
@@ -134,20 +171,18 @@ export default class Book extends Component {
       //comes from db
       buttons = (
         <div>
-          <Button
-            color="blue"
-            onClick={e => this.removeBook(e, this.props.book.userbookId)}
-          >
+          <Button color="blue" onClick={this.openConfirm}>
             {" "}
             {text}{" "}
           </Button>
-          <Button
-            color="blue"
-            onClick={e => this.updateReadStatus(e, this.props.book.userbookId)}
-          >
-            {" "}
-            {readStatus}{" "}
-          </Button>
+          <Confirm
+            open={this.state.confirmDelete}
+            onCancel={this.closeConfirm}
+            onConfirm={e => this.removeBook(e, this.props.book.userbookId)}
+          />
+          <br />
+          <br />
+          {readStatus}
           <br />
           <CommentContainer
             bookId={this.props.book.id}
@@ -181,7 +216,7 @@ export default class Book extends Component {
               <Item.Header>{this.props.book.title}</Item.Header>
               <Item.Meta>{this.props.book.authors}</Item.Meta>
               <Modal
-                trigger={<Button color="blue">Read More</Button>}
+                trigger={<Button color="blue">Description</Button>}
                 centered={false}
               >
                 <Modal.Header>{this.props.book.title}</Modal.Header>
