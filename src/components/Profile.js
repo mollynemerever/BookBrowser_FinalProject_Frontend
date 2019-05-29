@@ -114,6 +114,7 @@ class Profile extends Component {
         <BookContainer
           selectedUserId={this.state.selectedUser.id}
           user={this.props.state}
+          updateUserBooks={this.props.updateUserBooks}
         />
       </div>
     );

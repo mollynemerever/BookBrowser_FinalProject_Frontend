@@ -22,6 +22,7 @@ export default class BookContainer extends Component {
       );
       let userId = JSON.parse(window.localStorage.getItem("profile"));
       console.log("userId from local storage", userId);
+
       this.getBooks(userId);
     } else {
       //mybooklist, use localstorage.user id to fetch
@@ -87,10 +88,11 @@ export default class BookContainer extends Component {
             book={book}
             user={this.props.user}
             getBooks={this.getBooks}
+            updateUserBooks={this.props.updateUserBooks}
           />
         );
       }));
-    } else if (this.props.filter === "all" && this.state.arrayOfBooks !== "") {
+    } else if (this.state.arrayOfBooks !== "") {
       books = this.state.arrayOfBooks;
       return (display = books.map((book, index) => {
         return (
@@ -99,6 +101,8 @@ export default class BookContainer extends Component {
             book={book}
             user={this.props.user}
             getBooks={this.getBooks}
+            selectedUserId={this.props.selectedUserId}
+            updateUserBooks={this.props.updateUserBooks}
           />
         );
       }));

@@ -7,7 +7,18 @@ import { Image, Item, Button, Modal, Confirm, Radio } from "semantic-ui-react";
 export default class Book extends Component {
   state = {
     inCollection: this.props.book.inCollection,
-    confirmDelete: false
+    confirmDelete: false,
+    inCurrentUserbooks: false
+  };
+
+  componentDidMount = () => {
+    console.log(this.props.user.userbooks);
+    let currentUserbooks = this.props.user.userbooks;
+    currentUserbooks.forEach(book => {
+      if (book.book_id === this.props.book.id) {
+        this.setState({ inCurrentUserbooks: true });
+      }
+    });
   };
 
   saveBook = e => {
@@ -110,6 +121,34 @@ export default class Book extends Component {
     //call get books to rerender entire book list after updating state
   };
 
+  saveBookToAnotherUser = e => {
+    //fired when user saves book to their list from another profile
+    console.log("inside save book to another user");
+    let currentUser = this.props.user.currentUser.id;
+    let url = "http://localhost:3001/userbooks";
+    let config = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: currentUser,
+        book_id: this.props.book.id,
+        read_status: false
+      })
+    };
+    fetch(url, config)
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+        this.props.updateUserBooks(data);
+      });
+
+    //need to fetch current users list so when they come back to this page
+    //the buttons will render correctly
+  };
+
   render() {
     let buttons;
     let description;
@@ -179,8 +218,24 @@ export default class Book extends Component {
           />
         </div>
       );
+    } else if (
+      window.location.href.includes("profile") &&
+      this.props.user.currentUser.id !== this.props.selectedUserId
+    ) {
+      //you are viewing someone elses prof
+
+      if (this.state.inCurrentUserbooks === false) {
+        buttons = (
+          <Button color="blue" onClick={this.saveBookToAnotherUser}>
+            {" "}
+            Save To My List{" "}
+          </Button>
+        );
+      } else {
+        buttons = <Button color="blue"> In Your Collection </Button>;
+      }
     } else if (window.location.href.includes("profile")) {
-      buttons = null;
+      buttons = null; //you are viewing your own profile
     } else {
       //comes from google
       buttons = (
