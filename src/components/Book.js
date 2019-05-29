@@ -8,7 +8,8 @@ export default class Book extends Component {
   state = {
     inCollection: this.props.book.inCollection,
     confirmDelete: false,
-    inCurrentUserbooks: false
+    inCurrentUserbooks: false,
+    readStatus: this.props.book.read_status
   };
 
   componentDidMount = () => {
@@ -19,6 +20,13 @@ export default class Book extends Component {
         this.setState({ inCurrentUserbooks: true });
       }
     });
+  };
+
+  componentDidUpdate = prevProps => {
+    if (this.props.book.read_status !== prevProps.book.read_status) {
+      console.log("COMPONENT DID UPDATE DIFF PROPS");
+      this.setState({ readStatus: this.props.book.read_status });
+    }
   };
 
   saveBook = e => {
@@ -65,8 +73,16 @@ export default class Book extends Component {
     this.updateCollectionState(true);
   };
 
+  updateInCurrentUsersBooks = () => {
+    this.setState({ inCurrentUserbooks: true });
+  };
+
   updateCollectionState = status => {
     this.setState({ inCollection: status });
+  };
+
+  updateReadState = () => {
+    this.setState({ readStatus: !this.state.readStatus });
   };
 
   openConfirm = () => {
@@ -98,8 +114,9 @@ export default class Book extends Component {
     );
   };
 
-  updateReadStatus = async (e, userbookId) => {
+  updateReadStatus = (e, userbookId) => {
     e.preventDefault();
+    this.updateReadState();
     let url = `http://localhost:3001/userbooks/${userbookId}`;
     let config = {
       method: "PATCH",
@@ -112,12 +129,13 @@ export default class Book extends Component {
         read_status: !this.props.book.read_status
       })
     };
-    await fetch(url, config)
+    fetch(url, config)
       .then(resp => resp.json())
       .then(data => {
         console.log(data);
       });
-    await this.props.getBooks(this.props.user.currentUser.id);
+
+    //this.props.getBooks(this.props.user.currentUser.id);
     //call get books to rerender entire book list after updating state
   };
 
@@ -143,6 +161,7 @@ export default class Book extends Component {
       .then(data => {
         console.log(data);
         this.props.updateUserBooks(data);
+        this.updateInCurrentUsersBooks();
       });
 
     //need to fetch current users list so when they come back to this page
@@ -167,23 +186,26 @@ export default class Book extends Component {
       text = "Save Book";
     }
 
-    if (this.props.book.read_status === true) {
+    if (this.state.readStatus === true) {
       console.log("hi");
       readStatus = (
-        <Radio
-          toggle
-          label="Read"
-          defaultChecked
-          onChange={e => this.updateReadStatus(e, this.props.book.userbookId)}
-        />
+        <Button
+          color="blue"
+          onClick={e => this.updateReadStatus(e, this.props.book.userbookId)}
+        >
+          Read
+        </Button>
       );
     } else {
+      console.log("unread radio");
       readStatus = (
-        <Radio
-          toggle
-          label="Unread"
-          onChange={e => this.updateReadStatus(e, this.props.book.userbookId)}
-        />
+        <Button
+          basic
+          color="blue"
+          onClick={e => this.updateReadStatus(e, this.props.book.userbookId)}
+        >
+          Unread
+        </Button>
       );
     }
 

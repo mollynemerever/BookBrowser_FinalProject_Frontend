@@ -50,7 +50,7 @@ export default class App extends Component {
 
   updateUserBooks = userbook => {
     console.log("update userbooks");
-    this.setState({ userbooks: [...this.state.userbooks, userbook] });
+    //this.setState({ userbooks: [...this.state.userbooks, userbook] });
   };
 
   render() {
