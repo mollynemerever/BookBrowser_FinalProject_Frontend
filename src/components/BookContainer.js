@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Book from "./Book.js";
 import "semantic-ui-css/semantic.min.css";
-import { Radio, Form } from "semantic-ui-react";
+import { Radio, Form, Grid } from "semantic-ui-react";
 
 export default class BookContainer extends Component {
   state = {

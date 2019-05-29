@@ -193,7 +193,7 @@ export default class Book extends Component {
       imageLink = this.props.book.image;
     }
 
-    if (window.location.href.includes("mybooklist")) {
+    if (window.location.href.includes("mybooks")) {
       //comes from db
       buttons = (
         <div>
@@ -255,7 +255,7 @@ export default class Book extends Component {
       <div className="book-box">
         <Item.Group divided>
           <Item>
-            <Item.Image size="small" src={imageLink} verticalAlign="middle" />
+            <Item.Image size="small" src={imageLink} />
             <Item.Content verticalAlign="middle">
               <Item.Header>{this.props.book.title}</Item.Header>
               <Item.Meta> {this.props.book.author}</Item.Meta>
