@@ -57,9 +57,24 @@ export default class Person extends Component {
 
     let imageLink;
     if (this.state.follow_status === true) {
-      text = "UNFOLLOW";
+      text = (
+        <Button
+          color="blue"
+          onClick={e => this.handleClick(e, this.props.user.id)}
+        >
+          UNFOLLOW
+        </Button>
+      );
     } else {
-      text = "FOLLOW";
+      text = (
+        <Button
+          basic
+          color="blue"
+          onClick={e => this.handleClick(e, this.props.user.id)}
+        >
+          FOLLOW
+        </Button>
+      );
     }
     if (this.props.user.image === null) {
       imageLink = ProfilePic;
@@ -88,13 +103,7 @@ export default class Person extends Component {
           </Card.Meta>
           <Card.Description>{this.props.user.industry}</Card.Description>
 
-          <Button
-            basic
-            color="blue"
-            onClick={e => this.handleClick(e, this.props.user.id)}
-          >
-            {text}
-          </Button>
+          {text}
         </Card.Content>
       </Card>
     );
