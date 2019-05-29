@@ -3,7 +3,7 @@ import NavBar from "./navigationbar/NavBar.js";
 import BookContainer from "./BookContainer.js";
 import { Redirect } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
-import { Radio, Form } from "semantic-ui-react";
+import { Radio, Form, Icon, Header } from "semantic-ui-react";
 
 export default class MyBookList extends Component {
   state = {
@@ -31,36 +31,42 @@ export default class MyBookList extends Component {
         />
         <main>
           <div className="booklist-actions">
-            <p> actions for your booklist </p>
-            <Form>
-              <Form.Field>
-                Display Books: <b>{this.state.value}</b>
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  label="All Books"
-                  value="all"
-                  checked={this.state.value === "all"}
-                  onChange={this.handleChange}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  label="Read Books"
-                  value="read"
-                  checked={this.state.value === "read"}
-                  onChange={this.handleChange}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  label="Unread Books"
-                  value="unread"
-                  checked={this.state.value === "unread"}
-                  onChange={this.handleChange}
-                />
-              </Form.Field>
-            </Form>
+            <Form.Group className="booklist-form">
+              <Header size="large">
+                <Icon name="book" />
+                <Header.Content> My Books </Header.Content>
+              </Header>
+              <br />
+              <Form centered>
+                <Form.Field>
+                  <b>Display Books:</b>
+                </Form.Field>
+                <Form.Field>
+                  <Radio
+                    label="All Books"
+                    value="all"
+                    checked={this.state.value === "all"}
+                    onChange={this.handleChange}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Radio
+                    label="Read Books"
+                    value="read"
+                    checked={this.state.value === "read"}
+                    onChange={this.handleChange}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Radio
+                    label="Unread Books"
+                    value="unread"
+                    checked={this.state.value === "unread"}
+                    onChange={this.handleChange}
+                  />
+                </Form.Field>
+              </Form>
+            </Form.Group>
           </div>
           <BookContainer
             selectedUserId={this.state.selectedUserId}
