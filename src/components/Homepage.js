@@ -2,17 +2,18 @@ import React, { Component } from "react";
 import NavBar from "./navigationbar/NavBar.js";
 import { Redirect } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
-import { Button } from "semantic-ui-react";
+import { Button, Card, Image } from "semantic-ui-react";
 
 export default class Homepage extends Component {
   state = {
     bookCount: this.props.state.currentUser.userbooks,
-    user_follows: ""
+    user_followIds: "",
+    userFollowsDetail: ""
   };
 
   fetchFollowing = e => {
     e.preventDefault();
-    console.log("need to get my followers");
+
     let url = "http://localhost:3001/userfollowerrelationships";
     fetch(url)
       .then(resp => resp.json())
@@ -29,13 +30,46 @@ export default class Homepage extends Component {
         iFollow.push(object.following_id);
       }
     });
-    this.setState({ user_follows: iFollow });
+    this.setState({ user_followIds: iFollow });
+    this.getFollowingUserInfo(iFollow);
+  };
+
+  getFollowingUserInfo = array => {
+    console.log("inside get user following info");
+    array.forEach(id => {
+      let url = `http://localhost:3001/users/${id}`;
+      fetch(url)
+        .then(resp => resp.json())
+        .then(data => {
+          console.log(data[0]);
+          this.setState({
+            userFollowsDetail: [...this.state.userFollowsDetail, data[0]]
+          });
+        });
+    });
   };
 
   render() {
+    let people;
     if (!window.localStorage.user) {
       return <Redirect to="/" />;
     }
+    if (this.state.userFollowsDetail !== "") {
+      people = this.state.userFollowsDetail.map(person => {
+        return (
+          <Card>
+            <Card.Content>
+              <Image src={person.image} size="tiny" />
+              <Card.Header>{person.full_name}</Card.Header>
+              <Card.Meta>{person.industry}</Card.Meta>
+            </Card.Content>
+          </Card>
+        );
+      });
+    } else {
+      people = null;
+    }
+
     return (
       <div>
         <NavBar
@@ -49,6 +83,7 @@ export default class Homepage extends Component {
             {" "}
             Get People I Follow{" "}
           </Button>
+          {people}
         </main>
       </div>
     );
