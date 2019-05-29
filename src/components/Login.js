@@ -50,7 +50,7 @@ export default class Login extends Component {
 
   render() {
     if (this.props.state.isAuthenticated === true) {
-      return <Redirect to="/homepage" />;
+      return <Redirect to="/mybooks" />;
     }
 
     return (
