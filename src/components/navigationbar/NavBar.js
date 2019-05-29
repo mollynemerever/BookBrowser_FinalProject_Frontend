@@ -35,29 +35,11 @@ class NavBar extends Component {
                 <ul>
                   <li>
                     <Menu.Item
-                      active={activeItem === "Homepage"}
+                      active={activeItem === "My Books"}
                       onClick={this.handleItemClick}
                       as={Link}
-                      to="/homepage"
-                      name="Homepage"
-                    />
-                  </li>
-                  <li>
-                    <Menu.Item
-                      active={activeItem === "Edit Account"}
-                      onClick={this.handleItemClick}
-                      as={Link}
-                      to="/editaccount"
-                      name="Edit Account"
-                    />
-                  </li>
-                  <li>
-                    <Menu.Item
-                      active={activeItem === "Search Influencers"}
-                      onClick={this.handleItemClick}
-                      as={Link}
-                      to="/searchinfluencers"
-                      name="Search Influencers"
+                      to="/mybooks"
+                      name="My Books"
                     />
                   </li>
                   <li>
@@ -69,6 +51,26 @@ class NavBar extends Component {
                       name="Search Books"
                     />
                   </li>
+                  <li>
+                    <Menu.Item
+                      active={activeItem === "My Influencers"}
+                      onClick={this.handleItemClick}
+                      as={Link}
+                      to="/myinfluencers"
+                      name="My Influencers"
+                    />
+                  </li>
+
+                  <li>
+                    <Menu.Item
+                      active={activeItem === "Find Influencers"}
+                      onClick={this.handleItemClick}
+                      as={Link}
+                      to="/searchinfluencers"
+                      name="Find Influencers"
+                    />
+                  </li>
+
                   <li>
                     <Menu.Item
                       active={activeItem === "My Profile"}
@@ -84,13 +86,14 @@ class NavBar extends Component {
                       name="My Profile"
                     />
                   </li>
+
                   <li>
                     <Menu.Item
-                      active={activeItem === "My Books"}
+                      active={activeItem === "Edit Account"}
                       onClick={this.handleItemClick}
                       as={Link}
-                      to="/mybooklist"
-                      name="My Books"
+                      to="/editaccount"
+                      name="Edit Account"
                     />
                   </li>
                   <li>

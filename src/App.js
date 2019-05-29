@@ -69,7 +69,7 @@ export default class App extends Component {
         />
         <Route
           exact
-          path="/homepage"
+          path="/myinfluencers"
           component={() => (
             <Homepage state={this.state} handleLogout={this.handleLogout} />
           )}
@@ -115,7 +115,7 @@ export default class App extends Component {
         />
         <Route
           exact
-          path="/mybooklist"
+          path="/mybooks"
           component={() => (
             <MyBookList
               state={this.state}
