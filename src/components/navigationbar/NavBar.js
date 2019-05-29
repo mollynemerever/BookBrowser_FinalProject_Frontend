@@ -7,10 +7,10 @@ import "semantic-ui-css/semantic.min.css";
 import { Menu } from "semantic-ui-react";
 
 class NavBar extends Component {
-  handleItemClick = (e, { name }) => {
-    this.setState({ active: name });
-    window.localStorage.setItem("active", JSON.stringify(name));
-  };
+  // handleItemClick = (e, { name }) => {
+  //   this.setState({ active: name });
+  //   window.localStorage.setItem("active", JSON.stringify(name));
+  // };
 
   render() {
     const activeItem = JSON.parse(window.localStorage.getItem("active"));
