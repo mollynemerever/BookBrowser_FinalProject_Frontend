@@ -55,9 +55,9 @@ export default class Homepage extends Component {
       return <Redirect to="/" />;
     }
     if (this.state.userFollowsDetail !== "") {
-      people = this.state.userFollowsDetail.map(person => {
+      people = this.state.userFollowsDetail.map((person, index) => {
         return (
-          <Card>
+          <Card centered key={index}>
             <Card.Content>
               <Image src={person.image} size="tiny" />
               <Card.Header>{person.full_name}</Card.Header>
@@ -78,7 +78,6 @@ export default class Homepage extends Component {
           handleLogout={this.props.handleLogout}
         />
         <main>
-          <p> homepage </p>
           <Button color="blue" onClick={this.fetchFollowing}>
             {" "}
             Get People I Follow{" "}
