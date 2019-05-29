@@ -12,12 +12,18 @@ import MyBookList from "./components/MyBookList.js";
 export default class App extends Component {
   state = {
     currentUser: "",
-    isAuthenticated: false
+    isAuthenticated: false,
+    userbooks: ""
   };
 
   handleLogin = user => {
     window.localStorage.setItem("user", JSON.stringify(user));
-    this.setState({ currentUser: user, isAuthenticated: true });
+    window.localStorage.setItem("userbooks", JSON.stringify(user.userbooks));
+    this.setState({
+      currentUser: user,
+      isAuthenticated: true,
+      userbooks: user.userbooks
+    });
   };
 
   handleLogout = () => {
@@ -30,15 +36,21 @@ export default class App extends Component {
     if (window.localStorage.user) {
       console.log("user exists");
       let user = JSON.parse(window.localStorage.getItem("user"));
-      this.setState({ isAuthenticated: true, currentUser: user });
+      let userbooks = JSON.parse(window.localStorage.getItem("userbooks"));
+      this.setState({
+        isAuthenticated: true,
+        currentUser: user,
+        userbooks: userbooks
+      });
     } else {
       console.log("no user");
       window.localStorage.clear();
     }
   };
 
-  updateUserBooks = userbooks => {
-    this.setState({ userbooks: userbooks });
+  updateUserBooks = userbook => {
+    console.log("update userbooks");
+    this.setState({ userbooks: [...this.state.userbooks, userbook] });
   };
 
   render() {
@@ -89,7 +101,12 @@ export default class App extends Component {
         <Route
           exact
           path="/profile"
-          component={() => <Profile state={this.state} />}
+          component={() => (
+            <Profile
+              state={this.state}
+              updateUserBooks={this.updateUserBooks}
+            />
+          )}
         />
         <Route
           exact
