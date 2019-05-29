@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import NavBar from "./navigationbar/NavBar.js";
+import "semantic-ui-css/semantic.min.css";
+import { Header } from "semantic-ui-react";
 
 export default class Login extends Component {
   responseGoogle = response => {
@@ -54,13 +56,24 @@ export default class Login extends Component {
 
     return (
       <div className="landing-page">
-        <h1> BookBrowser </h1>
-        <h2> Curate, Discover, and Share. </h2> <br />
-        <NavBar
-          state={this.props.state}
-          responseGoogle={this.responseGoogle}
-          handleLogout={this.props.handleLogout}
-        />
+        <div className="landing-contents">
+          <Header as="h1" size="large">
+            {" "}
+            BookBrowser{" "}
+          </Header>
+
+          <Header as="h2" size="small">
+            {" "}
+            Discover, Curate, and Inspire Your Reading.{" "}
+          </Header>
+
+          <br />
+          <NavBar
+            state={this.props.state}
+            responseGoogle={this.responseGoogle}
+            handleLogout={this.props.handleLogout}
+          />
+        </div>
       </div>
     );
   }

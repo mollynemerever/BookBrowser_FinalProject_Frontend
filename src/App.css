@@ -8,6 +8,10 @@ main {
   margin-top: 75px;
 }
 
+.ui.menu {
+  font-size: 1.5rem;
+}
+
 .edit-account {
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 25px;
@@ -39,15 +43,16 @@ main {
 }
 
 .landing-page {
+  display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
-  height: 350px;
+  height: 500px;
   margin-top: 7%;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.6);
-  font-size: 45px;
-  font-family: "Maven Pro", sans-serif;
+  font-size: 60px;
+  font-family: "IBM Plex Serif", serif;
 }
 
 h1,
