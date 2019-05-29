@@ -78,7 +78,11 @@ export default class App extends Component {
           exact
           path="/editaccount"
           component={() => (
-            <EditAccount state={this.state} handleLogin={this.handleLogin} />
+            <EditAccount
+              state={this.state}
+              handleLogin={this.handleLogin}
+              handleLogout={this.handleLogout}
+            />
           )}
         />
         <Route
@@ -105,6 +109,7 @@ export default class App extends Component {
             <Profile
               state={this.state}
               updateUserBooks={this.updateUserBooks}
+              handleLogout={this.handleLogout}
             />
           )}
         />
