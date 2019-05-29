@@ -3,7 +3,7 @@ import NavBar from "./navigationbar/NavBar.js";
 import BookContainer from "./BookContainer.js";
 import { Redirect } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Input, Header, Icon } from "semantic-ui-react";
 
 export default class SearchBooks extends Component {
   state = { searchTerm: "", bookArray: "" };
@@ -75,27 +75,37 @@ export default class SearchBooks extends Component {
           responseGoogle={this.responseGoogle}
           handleLogout={this.props.handleLogout}
         />
-        <main>
-          <Form className="search-form">
-            <Form.Input
-              label="Search Here:"
-              placeholder="author or title"
-              onChange={this.handleChange}
-              value={this.state.searchTerm}
-              width={5}
-            />
-            <Button
-              basic
-              color="blue"
-              type="submit"
-              onClick={this.searchGoogle}
-            >
-              Search
-            </Button>
-          </Form>
+        <div className="search-header">
+          <Form.Group centered className="search-form">
+            <Header size="large">
+              <Icon name="search" />
+              <Header.Content>
+                {" "}
+                Search for books by Author or Title{" "}
+              </Header.Content>
+            </Header>
+            <br />
+            <Form centered>
+              <Form.Field centered inline>
+                <label>Search Here:</label>
+                <Input
+                  inline
+                  placeholder="author or title"
+                  onChange={this.handleChange}
+                  value={this.state.searchTerm}
+                  width={5}
+                />
+              </Form.Field>
 
-          {books}
-        </main>
+              <Form.Field>
+                <Button color="blue" type="submit" onClick={this.searchGoogle}>
+                  Search
+                </Button>
+              </Form.Field>
+            </Form>
+          </Form.Group>
+        </div>
+        {books}
       </div>
     );
   }
