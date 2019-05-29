@@ -6,7 +6,9 @@ import { Radio, Form, Grid } from "semantic-ui-react";
 export default class BookContainer extends Component {
   state = {
     arrayOfBooks: "",
-    filteredArray: ""
+    filteredArray: "",
+    readBooks: "",
+    unreadBooks: ""
   };
 
   componentDidMount = () => {
@@ -34,7 +36,8 @@ export default class BookContainer extends Component {
 
   componentDidUpdate = prevProps => {
     if (this.props.filter !== prevProps.filter && this.props.filter !== "all") {
-      this.filterBooks();
+      let userId = JSON.parse(window.localStorage.getItem("user")).id;
+      this.getBooks(userId);
     }
   };
 
@@ -60,27 +63,39 @@ export default class BookContainer extends Component {
       array.push(bookObject);
     });
     this.setState({ arrayOfBooks: array });
+    this.filterBooks(array);
   };
 
-  filterBooks = () => {
-    let filtered;
-    let unfiltered = this.state.arrayOfBooks;
-    if (this.props.filter === "unread") {
-      filtered = unfiltered.filter(book => book.read_status === false);
-      console.log("filtered unread", filtered);
-    } else {
-      filtered = unfiltered.filter(book => book.read_status === true);
-      console.log("filtered read", filtered);
-    }
-    this.setState({ filteredArray: filtered });
+  filterBooks = array => {
+    let unfiltered = array;
+
+    let unread = unfiltered.filter(book => book.read_status === false);
+    console.log("filtered unread", unread);
+    this.setState({ unreadBooks: unread });
+
+    let read = unfiltered.filter(book => book.read_status === true);
+    console.log("filtered read", read);
+    this.setState({ readBooks: read });
   };
 
   render() {
     let display;
     let books;
-    if (this.props.filter !== "all" && this.state.filteredArray !== "") {
-      books = this.state.filteredArray;
-
+    if (this.props.filter === "unread") {
+      books = this.state.unreadBooks;
+      return (display = books.map((book, index) => {
+        return (
+          <Book
+            key={index}
+            book={book}
+            user={this.props.user}
+            getBooks={this.getBooks}
+            updateUserBooks={this.props.updateUserBooks}
+          />
+        );
+      }));
+    } else if (this.props.filter === "read") {
+      books = this.state.readBooks;
       return (display = books.map((book, index) => {
         return (
           <Book
@@ -109,6 +124,24 @@ export default class BookContainer extends Component {
     } else {
       display = <h6> no books </h6>;
     }
+
+    // if (this.props.filter !== "all" && this.state.filteredArray !== "") {
+    //   books = this.state.filteredArray;
+    //   console.log("filter", this.props.filter);
+    //   console.log("filtered array state", this.state.filteredArray);
+    //   console.log("books variable to be mapped", books);
+    //   return (display = books.map((book, index) => {
+    //     return (
+    //       <Book
+    //         key={index}
+    //         book={book}
+    //         user={this.props.user}
+    //         getBooks={this.getBooks}
+    //         updateUserBooks={this.props.updateUserBooks}
+    //       />
+    //     );
+    //   }));
+    // }
 
     return <div>{display}</div>;
   }
