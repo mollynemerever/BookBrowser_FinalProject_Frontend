@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
-import Homepage from "./Homepage.js";
 import NavBar from "./navigationbar/NavBar.js";
 
 export default class Login extends Component {

@@ -32,8 +32,6 @@ export default class SearchBooks extends Component {
     searchResults.forEach(object => {
       let bookObject = {};
       bookObject.title = object.volumeInfo.title;
-      //debugger;
-      //bookObject.authors = object.volumeInfo.authors[0];
       bookObject.description = object.volumeInfo.description;
       bookObject.googleId = object.id;
 

@@ -44,10 +44,8 @@ export default class CommentContainer extends Component {
       fetch(url)
         .then(resp => resp.json())
         .then(data => {
-          //console.log(this);
           test.comment = data;
           test.id = object.bookCommentId;
-          console.log(test);
           this.updateCommentState(test);
         });
     });
@@ -57,7 +55,6 @@ export default class CommentContainer extends Component {
     this.setState({
       comments: [...this.state.comments, test]
     });
-    //debugger;
   };
 
   handleChange = e => {
@@ -102,7 +99,6 @@ export default class CommentContainer extends Component {
     fetch(url, config)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data);
         this.getBookCommentInstances();
       });
   };
@@ -111,7 +107,6 @@ export default class CommentContainer extends Component {
     let comments;
     if (this.state.comments.length > 0) {
       comments = this.state.comments.map((comment, index) => {
-        //debugger;
         return (
           <Comments
             key={index}

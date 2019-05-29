@@ -12,7 +12,6 @@ export default class BookContainer extends Component {
   };
 
   componentDidMount = () => {
-    console.log("book container mounted");
     if (window.location.href.includes("searchbooks")) {
       //bookarray passed from searchbooks component
       this.setState({ arrayOfBooks: this.props.bookArray });
@@ -23,8 +22,6 @@ export default class BookContainer extends Component {
         JSON.stringify(this.props.selectedUserId)
       );
       let userId = JSON.parse(window.localStorage.getItem("profile"));
-      console.log("userId from local storage", userId);
-
       this.getBooks(userId);
     } else {
       //mybooklist, use localstorage.user id to fetch
@@ -42,7 +39,6 @@ export default class BookContainer extends Component {
   };
 
   getBooks = userId => {
-    console.log("inside get books");
     let url = `http://localhost:3001/users/${userId}`;
     fetch(url)
       .then(resp => resp.json())
@@ -68,13 +64,9 @@ export default class BookContainer extends Component {
 
   filterBooks = array => {
     let unfiltered = array;
-
     let unread = unfiltered.filter(book => book.read_status === false);
-    console.log("filtered unread", unread);
     this.setState({ unreadBooks: unread });
-
     let read = unfiltered.filter(book => book.read_status === true);
-    console.log("filtered read", read);
     this.setState({ readBooks: read });
   };
 
@@ -124,24 +116,6 @@ export default class BookContainer extends Component {
     } else {
       display = <h6> no books </h6>;
     }
-
-    // if (this.props.filter !== "all" && this.state.filteredArray !== "") {
-    //   books = this.state.filteredArray;
-    //   console.log("filter", this.props.filter);
-    //   console.log("filtered array state", this.state.filteredArray);
-    //   console.log("books variable to be mapped", books);
-    //   return (display = books.map((book, index) => {
-    //     return (
-    //       <Book
-    //         key={index}
-    //         book={book}
-    //         user={this.props.user}
-    //         getBooks={this.getBooks}
-    //         updateUserBooks={this.props.updateUserBooks}
-    //       />
-    //     );
-    //   }));
-    // }
 
     return <div>{display}</div>;
   }
