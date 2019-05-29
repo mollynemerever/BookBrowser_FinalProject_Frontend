@@ -27,14 +27,12 @@ export default class App extends Component {
   };
 
   handleLogout = () => {
-    console.log("inside handleLogout");
     this.setState({ currentUser: "", isAuthenticated: false });
     window.localStorage.clear();
   };
 
   componentDidMount = () => {
     if (window.localStorage.user) {
-      console.log("user exists");
       let user = JSON.parse(window.localStorage.getItem("user"));
       let userbooks = JSON.parse(window.localStorage.getItem("userbooks"));
       this.setState({
@@ -43,13 +41,13 @@ export default class App extends Component {
         userbooks: userbooks
       });
     } else {
-      console.log("no user");
       window.localStorage.clear();
     }
   };
 
   updateUserBooks = userbook => {
     console.log("update userbooks");
+    //address this later - has to do with saving from someone else's profile
     //this.setState({ userbooks: [...this.state.userbooks, userbook] });
   };
 

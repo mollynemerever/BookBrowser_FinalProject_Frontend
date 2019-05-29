@@ -13,7 +13,6 @@ export default class Book extends Component {
   };
 
   componentDidMount = () => {
-    console.log(this.props.user.userbooks);
     let currentUserbooks = this.props.user.userbooks;
     currentUserbooks.forEach(book => {
       if (book.book_id === this.props.book.id) {
@@ -24,7 +23,6 @@ export default class Book extends Component {
 
   componentDidUpdate = prevProps => {
     if (this.props.book.read_status !== prevProps.book.read_status) {
-      console.log("COMPONENT DID UPDATE DIFF PROPS");
       this.setState({ readStatus: this.props.book.read_status });
     }
   };
@@ -46,7 +44,6 @@ export default class Book extends Component {
         googleId: this.props.book.googleId
       })
     };
-
     fetch(url, config)
       .then(resp => resp.json())
       .then(data => {
@@ -129,19 +126,12 @@ export default class Book extends Component {
         read_status: !this.props.book.read_status
       })
     };
-    fetch(url, config)
-      .then(resp => resp.json())
-      .then(data => {
-        console.log(data);
-      });
-
-    //this.props.getBooks(this.props.user.currentUser.id);
+    fetch(url, config);
     //call get books to rerender entire book list after updating state
   };
 
   saveBookToAnotherUser = e => {
     //fired when user saves book to their list from another profile
-    console.log("inside save book to another user");
     let currentUser = this.props.user.currentUser.id;
     let url = "http://localhost:3001/userbooks";
     let config = {
@@ -159,11 +149,9 @@ export default class Book extends Component {
     fetch(url, config)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data);
         this.props.updateUserBooks(data);
         this.updateInCurrentUsersBooks();
       });
-
     //need to fetch current users list so when they come back to this page
     //the buttons will render correctly
   };
@@ -187,7 +175,6 @@ export default class Book extends Component {
     }
 
     if (this.state.readStatus === true) {
-      console.log("hi");
       readStatus = (
         <Button
           color="blue"
@@ -197,7 +184,6 @@ export default class Book extends Component {
         </Button>
       );
     } else {
-      console.log("unread radio");
       readStatus = (
         <Button
           basic

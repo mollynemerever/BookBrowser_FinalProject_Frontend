@@ -84,7 +84,6 @@ export default class EditAccount extends Component {
           responseGoogle={this.responseGoogle}
           handleLogout={this.props.handleLogout}
         />
-
         <div className="edit-account">
           <Form.Group centered>
             <Header size="large">
@@ -118,7 +117,6 @@ export default class EditAccount extends Component {
                   options={industries}
                 />
               </Form.Field>
-
               <Button color="blue" type="submit" value="Submit">
                 Save Changes
               </Button>

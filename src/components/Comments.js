@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
-import {
-  Button,
-  Input,
-  Comment,
-  Form,
-  Divider,
-  Confirm
-} from "semantic-ui-react";
+import { Comment, Divider, Confirm } from "semantic-ui-react";
 
 export default class Comments extends Component {
   state = {
@@ -72,7 +65,6 @@ export default class Comments extends Component {
     fetch(url, config)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data);
         this.deleteUserCommentInstance();
       });
   };

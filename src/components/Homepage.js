@@ -18,7 +18,6 @@ export default class Homepage extends Component {
     fetch(url)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data);
         this.filterFollowing(data);
       });
   };
@@ -35,13 +34,11 @@ export default class Homepage extends Component {
   };
 
   getFollowingUserInfo = array => {
-    console.log("inside get user following info");
     array.forEach(id => {
       let url = `http://localhost:3001/users/${id}`;
       fetch(url)
         .then(resp => resp.json())
         .then(data => {
-          console.log(data[0]);
           this.setState({
             userFollowsDetail: [...this.state.userFollowsDetail, data[0]]
           });
