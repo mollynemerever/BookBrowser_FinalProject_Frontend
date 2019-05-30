@@ -62,13 +62,32 @@ h2 {
   margin-top: auto;
 }
 
+.form.ui.form.filter-form {
+  font-size: 1.5em;
+}
+
+div.radio-buttons {
+  display: flex;
+}
+
+.ui.radio.checkbox label {
+  padding-left: 1.3em;
+  padding-right: 2em;
+}
+
+div.fiels.booklist-form {
+  margin-left: 5%;
+  margin-right: 5%;
+  text-align: center;
+}
+
 .book-box {
   display: flex;
   margin-top: 2%;
   margin-bottom: 2%;
-  margin-left: 25%;
-  margin-right: 25%;
-  padding: 5%;
+  margin-left: 33%;
+  margin-right: 33%;
+  padding: 2%;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 25px;
   align-items: center;
@@ -91,16 +110,16 @@ h2 {
 }
 
 .search-header,
-.booklist-actions {
+div.booklist-actions {
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 8%;
-  margin-left: 25%;
-  margin-right: 25%;
-  height: 200px;
+  margin-left: 33%;
+  margin-right: 33%;
+  height: 250px;
 }
 
 .person {
