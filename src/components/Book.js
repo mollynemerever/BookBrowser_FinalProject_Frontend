@@ -283,7 +283,7 @@ export default class Book extends Component {
                   <Image wrapped size="medium" src={imageLink} />
                   <Modal.Description>
                     <Modal.Header>{this.props.book.authors}</Modal.Header>
-                    <p>{description} </p>
+                    <p className="book-descrip">{description} </p>
                   </Modal.Description>
                 </Modal.Content>
               </Modal>
