@@ -2,7 +2,14 @@ import React, { Component } from "react";
 import CommentContainer from "./CommentContainer.js";
 import BookPic from "../book.png";
 import "semantic-ui-css/semantic.min.css";
-import { Image, Item, Button, Modal, Confirm, Radio } from "semantic-ui-react";
+import {
+  Image,
+  Item,
+  Button,
+  Modal,
+  Confirm,
+  Checkbox
+} from "semantic-ui-react";
 
 export default class Book extends Component {
   state = {
@@ -176,22 +183,21 @@ export default class Book extends Component {
 
     if (this.state.readStatus === true) {
       readStatus = (
-        <Button
-          color="blue"
-          onClick={e => this.updateReadStatus(e, this.props.book.userbookId)}
-        >
-          Read
-        </Button>
+        <Checkbox
+          toggle
+          label="Read"
+          checked={true}
+          onChange={e => this.updateReadStatus(e, this.props.book.userbookId)}
+        />
       );
     } else {
       readStatus = (
-        <Button
-          basic
-          color="blue"
-          onClick={e => this.updateReadStatus(e, this.props.book.userbookId)}
-        >
-          Unread
-        </Button>
+        <Checkbox
+          toggle
+          label="Unread"
+          checked={false}
+          onChange={e => this.updateReadStatus(e, this.props.book.userbookId)}
+        />
       );
     }
 
