@@ -95,21 +95,27 @@ class Profile extends Component {
           handleLogout={this.props.handleLogout}
         />
 
-        <Card centered raised className="profile-person">
-          <Image src={imageLink} wrapped ui={true} />
-          <Card.Content className="prof-card-content">
-            <Card.Header>{this.state.selectedUser.full_name}</Card.Header>
-            <Card.Meta>
-              <span className="date">
-                Joined in {this.state.selectedUser.join_year}
-              </span>
-            </Card.Meta>
-            <Card.Description>
-              {this.state.selectedUser.industry}
-            </Card.Description>{" "}
-            <br />
-            {button}
+        <Card color="blue" centered raised className="person">
+          <Image src={imageLink} wrapped ui={false} className="prof-pic" />
+          <Card.Content className="person-info">
+            <div className="person-card-text">
+              <Card.Header className="person-name">
+                {this.state.selectedUser.full_name}
+              </Card.Header>
+              <br />
+              <Card.Meta>
+                <span className="person-card-date">
+                  Joined in {this.state.selectedUser.join_year}
+                </span>
+              </Card.Meta>
+              <br />
+              <Card.Description className="prof-descript">
+                {this.state.selectedUser.industry}
+              </Card.Description>{" "}
+              <br />
+            </div>
           </Card.Content>
+          <Card.Content extra>{button}</Card.Content>
         </Card>
         <BookContainer
           selectedUserId={this.state.selectedUser.id}
