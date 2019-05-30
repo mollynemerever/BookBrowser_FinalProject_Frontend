@@ -81,8 +81,9 @@ export default class Homepage extends Component {
       people = this.state.userFollowsDetail.map((person, index) => {
         return (
           <Card centered key={index}>
-            <Image src={person.image} size="tiny" />
             <Card.Content>
+              <Image src={person.image} size="tiny" />
+              <br />
               <Card.Header
                 as={Link}
                 to={{
@@ -97,6 +98,7 @@ export default class Homepage extends Component {
               </Card.Header>
 
               <Card.Description>{person.industry}</Card.Description>
+              <br />
               <Button
                 onClick={e => this.handleClick(e, person.id)}
                 color="blue"
