@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Person from "./Person.js";
 import Profile from "./Profile.js";
 import "semantic-ui-css/semantic.min.css";
-import { Card, Divider } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 
 export default class PeopleContainer extends Component {
   state = {
@@ -74,7 +74,6 @@ export default class PeopleContainer extends Component {
     return (
       <div className="people-grid">
         <Card.Group itemsPerRow={3}>{people}</Card.Group>
-        <Divider />
       </div>
     );
   }

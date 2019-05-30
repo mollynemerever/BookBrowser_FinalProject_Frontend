@@ -15,9 +15,8 @@ export default class SearchInfluencers extends Component {
           responseGoogle={this.responseGoogle}
           handleLogout={this.props.handleLogout}
         />
-        <main>
-          <PeopleContainer state={this.props} />
-        </main>
+
+        <PeopleContainer state={this.props} />
       </div>
     );
   }

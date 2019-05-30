@@ -116,7 +116,7 @@ h2 {
 
 .ui.three.cards > .card {
   width: 300px;
-  height: 600px;
+  height: 500px;
   /* calc(33.33333333% - 2em); */
   /* margin-left: 1em;
   margin-right: 1em; */
@@ -140,13 +140,25 @@ img.ui.tiny.image {
   margin-bottom: 10px;
 }
 
+a.header.person-name {
+  font-weight: bold;
+}
+
 div.image.prof-pic {
   height: 50%;
 }
 
-/* div.content.person-info {
-  height: 20%;
-} */
+div.person.card-text {
+  display: flex;
+  align-items: flex-start;
+}
+
+div.content.person-info {
+  height: 50%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
 
 div.ui.blue.centered.raise.card.person {
   height: 300px;
