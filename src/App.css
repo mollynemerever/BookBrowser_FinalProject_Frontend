@@ -115,9 +115,11 @@ h2 {
 }
 
 .ui.three.cards > .card {
-  width: calc(33.33333333% - 2em);
-  margin-left: 1em;
-  margin-right: 1em;
+  width: 300px;
+  height: 600px;
+  /* calc(33.33333333% - 2em); */
+  /* margin-left: 1em;
+  margin-right: 1em; */
 }
 
 .ui.raised.card {
@@ -130,6 +132,30 @@ h2 {
 
 .ui.middle.aligned.image {
   height: 25%;
+}
+
+img.ui.tiny.image {
+  height: 120px;
+  width: 120px;
+  margin-bottom: 10px;
+}
+
+div.image.prof-pic {
+  height: 50%;
+}
+
+/* div.content.person-info {
+  height: 20%;
+} */
+
+div.ui.blue.centered.raise.card.person {
+  height: 300px;
+  width: 200px;
+}
+
+.ui.card > .image:not(.ui) > img,
+.ui.cards > .card > .image:not(.ui) > img {
+  height: 100%;
 }
 
 .booklist-actions {
