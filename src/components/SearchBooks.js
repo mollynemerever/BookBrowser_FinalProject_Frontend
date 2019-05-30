@@ -74,7 +74,7 @@ export default class SearchBooks extends Component {
           handleLogout={this.props.handleLogout}
         />
         <div className="search-header">
-          <Form.Group centered className="search-form">
+          <Form.Group className="search-form">
             <Header size="large">
               <Icon name="search" />
               <Header.Content>
@@ -83,11 +83,10 @@ export default class SearchBooks extends Component {
               </Header.Content>
             </Header>
             <br />
-            <Form centered>
-              <Form.Field centered inline>
+            <Form>
+              <Form.Field>
                 <label>Search Here:</label>
                 <Input
-                  inline
                   placeholder="author or title"
                   onChange={this.handleChange}
                   value={this.state.searchTerm}

@@ -274,7 +274,6 @@ export default class Book extends Component {
               <Item.Header>{this.props.book.title}</Item.Header>
               <Item.Meta> {this.props.book.author}</Item.Meta>
 
-              <Item.Extra>{buttons} </Item.Extra>
               <Modal
                 trigger={<Button color="blue">Description</Button>}
                 centered={true}
@@ -288,6 +287,7 @@ export default class Book extends Component {
                   </Modal.Description>
                 </Modal.Content>
               </Modal>
+              <Item.Extra>{buttons} </Item.Extra>
             </Item.Content>
           </Item>
         </Item.Group>
