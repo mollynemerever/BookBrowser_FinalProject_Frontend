@@ -34,37 +34,41 @@ export default class MyBookList extends Component {
             <Form.Group className="booklist-form">
               <Header size="large">
                 <Icon name="book" />
-                <Header.Content> My Books </Header.Content>
+                <Header.Content className="mybooks"> My Books </Header.Content>
               </Header>
               <br />
-              <Form centered>
+              <Form centered className="filter-form">
                 <Form.Field>
                   <b>Display Books:</b>
                 </Form.Field>
-                <Form.Field>
-                  <Radio
-                    label="All Books"
-                    value="all"
-                    checked={this.state.value === "all"}
-                    onChange={this.handleChange}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <Radio
-                    label="Read Books"
-                    value="read"
-                    checked={this.state.value === "read"}
-                    onChange={this.handleChange}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <Radio
-                    label="Unread Books"
-                    value="unread"
-                    checked={this.state.value === "unread"}
-                    onChange={this.handleChange}
-                  />
-                </Form.Field>
+                <div className="radio-buttons">
+                  <Form.Field>
+                    <Radio
+                      label="All Books"
+                      value="all"
+                      checked={this.state.value === "all"}
+                      onChange={this.handleChange}
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <Radio
+                      label="Read Books"
+                      value="read"
+                      checked={this.state.value === "read"}
+                      onChange={this.handleChange}
+                    />
+                  </Form.Field>
+                  {"  "}
+                  <Form.Field>
+                    <Radio
+                      label="Unread Books"
+                      value="unread"
+                      checked={this.state.value === "unread"}
+                      onChange={this.handleChange}
+                      className="radio"
+                    />
+                  </Form.Field>
+                </div>
               </Form>
             </Form.Group>
           </div>
