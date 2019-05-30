@@ -53,11 +53,11 @@ export default class Person extends Component {
   };
 
   render() {
-    let text;
+    let button;
 
     let imageLink;
     if (this.state.follow_status === true) {
-      text = (
+      button = (
         <Button
           color="blue"
           onClick={e => this.handleClick(e, this.props.user.id)}
@@ -66,7 +66,7 @@ export default class Person extends Component {
         </Button>
       );
     } else {
-      text = (
+      button = (
         <Button
           basic
           color="blue"
@@ -86,25 +86,32 @@ export default class Person extends Component {
       <Card color="blue" centered raised className="person">
         <Image className="prof-pic" src={imageLink} wrapped ui={false} />
         <Card.Content className="person-info">
-          <Card.Header
-            as={Link}
-            to={{
-              pathname: "/profile",
-              state: {
-                selectedUser: this.props.user,
-                follow_status: this.state.follow_status
-              }
-            }}
-          >
-            {this.props.user.full_name}
-          </Card.Header>
-          <Card.Meta>
-            <span className="date">Joined in {this.props.user.join_year}</span>
-          </Card.Meta>
-          <Card.Description>{this.props.user.industry}</Card.Description>
-
-          {text}
+          <div className="person-card-text">
+            <Card.Header
+              className="person-name"
+              as={Link}
+              to={{
+                pathname: "/profile",
+                state: {
+                  selectedUser: this.props.user,
+                  follow_status: this.state.follow_status
+                }
+              }}
+            >
+              {this.props.user.full_name}
+            </Card.Header>
+            <br />
+            <Card.Meta>
+              <span className="person-card-date">
+                Joined in {this.props.user.join_year}
+              </span>
+            </Card.Meta>
+            <br />
+            <Card.Description>{this.props.user.industry}</Card.Description>
+            <br />
+          </div>
         </Card.Content>
+        <Card.Content extra>{button}</Card.Content>
       </Card>
     );
   }
