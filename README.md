@@ -24,9 +24,13 @@ There is a need for a platform which focuses on providing users with a tool to c
  
 
 #### 5. Access Instructions
+*Heroku link to be added*
+YouTube Demo: https://www.youtube.com/watch?v=1ANdzKvmdCU&t=1s
 
 #### 6. Backend Repository
 Backend respository can be found here: https://github.com/mollynemerever/FinalProject_Backend
+
+
 
 
 ![ERD Diagram](https://github.com/mollynemerever/FinalProject_Frontend/blob/master/BookBrowser_ERD.png)
