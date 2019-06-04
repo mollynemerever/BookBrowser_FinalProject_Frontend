@@ -99,7 +99,7 @@ export default class BookContainer extends Component {
           />
         );
       }));
-    } else if (this.state.arrayOfBooks !== "") {
+    } else if (this.state.arrayOfBooks.length > 0) {
       books = this.state.arrayOfBooks;
       return (display = books.map((book, index) => {
         return (
@@ -114,7 +114,7 @@ export default class BookContainer extends Component {
         );
       }));
     } else {
-      display = <h6> no books </h6>;
+      display = <div className="book-box">No Books - Get Searchin'!</div>;
     }
 
     return <div>{display}</div>;
