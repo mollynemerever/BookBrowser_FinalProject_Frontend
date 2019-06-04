@@ -1,7 +1,7 @@
 # BookBrowser
 
 #### Molly Nemerever
-###### Project completed as part of [Flatiron School](https://flatironschool.comcampuses/seattle/) curriculum.
+###### Project completed as part of [Flatiron School](https://flatironschool.com/campuses/seattle/) curriculum.
 
 *placeholder for project gif here*
 
