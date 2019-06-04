@@ -3,7 +3,7 @@
 #### Molly Nemerever
 ###### Project completed as part of [Flatiron School](https://flatironschool.com/campuses/seattle/) curriculum.
 
-*placeholder for project gif here*
+![Project GIF](https://github.com/mollynemerever/FinalProject_Frontend/blob/master/bookbrowser_gif.gif)
 
 ## Project FAQ
 #### 1. What is BookBrowser?
