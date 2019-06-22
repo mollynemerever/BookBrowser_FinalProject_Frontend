@@ -16,7 +16,7 @@ After creating an account, the user will create their personal book list. Books 
 There is a need for a platform which focuses on providing users with a tool to curate, manage, and discover books in a tightly curated environment. BookBrowser eliminates the noise of larger sites - no advertisements, no sponsored booklists, and comments are only viewable by the user who wrote them. The hope is that all types of people will utilize the site - authors, influencers, politicians, and so on. Users are enouraged to follow people they admire and trust such as friends, coworkers, or someone they idolize in their industry. BookBrowser strives to cultivate a community of users passionate about reading and the opportunity to grow both professionally and personally through literature. 
 
 #### 4. Technologies Used
- -  Ruby on Rails backend supported by PostgreSQL
+ -  Ruby on Rails back end supported by PostgreSQL
  -  JavaScript front end supported by React
  -  Google Books API
  -  Google OAuth
